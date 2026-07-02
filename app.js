@@ -108,8 +108,8 @@ async function loadJadwal() {
 
 async function loadJadwalMingguan() {
     const loader = document.getElementById('loader-jadwal');
-    // Cari container untuk tailwind (dynamic-events) atau fallback (schedule-container)
-    const container = document.getElementById('dynamic-events') || document.getElementById('schedule-container');
+    // Cari container untuk tailwind (dynamic-events)
+    const container = document.getElementById('dynamic-events');
 
     if (!container) return;
 
@@ -125,8 +125,8 @@ async function loadJadwalMingguan() {
         if (result.status === "success" && result.data.length > 0) {
             container.innerHTML = '';
 
-            // Jika container adalah dynamic-events (Tailwind CSS Grid Modern)
-            if (container.id === 'dynamic-events') {
+            // Render jadwal ke dalam Grid
+            if (container) {
                 const dayMap = { 'Senin': 0, 'Selasa': 1, 'Rabu': 2, 'Kamis': 3, 'Jumat': 4 };
                 const colors = [
                     { bg: 'bg-primary-fixed', border: 'border-primary', text: 'text-primary' },
@@ -188,33 +188,6 @@ async function loadJadwalMingguan() {
                     </div>`;
                     container.insertAdjacentHTML('beforeend', html);
                 });
-            } else {
-                // Fallback rendering lama
-                const grouped = {};
-                result.data.forEach(item => {
-                    const hari = item.Hari || 'Lainnya';
-                    if (!grouped[hari]) grouped[hari] = [];
-                    grouped[hari].push(item);
-                });
-
-                for (const hari in grouped) {
-                    const htmlHeader = `<h4 style="margin: 15px 0 10px 0; color: #818cf8; border-bottom: 1px solid var(--glass-border); padding-bottom: 5px;">${hari}</h4>`;
-                    container.insertAdjacentHTML('beforeend', htmlHeader);
-
-                    grouped[hari].forEach(item => {
-                        const kelasEncoded = encodeURIComponent(item.Kelas);
-                        const html = `
-                            <a href="kelas.html?kelas=${kelasEncoded}" class="schedule-item">
-                                <div>
-                                    <div class="schedule-time">${item.Jam || ''}</div>
-                                    <div class="schedule-class">${item.Kelas || 'Kelas'}</div>
-                                    <div class="schedule-subject">${item.Materi || 'Informatika'}</div>
-                                </div>
-                            </a>
-                        `;
-                        container.insertAdjacentHTML('beforeend', html);
-                    });
-                }
             }
         } else {
             container.innerHTML = `<p style="text-align:center; color: var(--text-muted);">Tidak ada jadwal.</p>`;
