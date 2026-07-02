@@ -140,9 +140,9 @@
 </div>
 <!-- Profile Header -->
 <div class="flex flex-col items-start px-6 mb-8">
-<img class="w-12 h-12 rounded-full mb-3 object-cover border-2 border-primary-fixed" data-alt="Profil Guru" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDWsZONDKHPCjR5qhw7gl2rzf3Pg0QotMOW83tUbeJmftb07Sfqk5oncZdli1lEpRKAYRaae8XiyjRIPJ0UeYdjUIPFDBMXd1H32-gKpt0O2C0LnRz8Ia0hO5RO8IA3TQQ6uHpEFdeVV-cl6iYw32xUYGMjfuYI4HzWhaQCqAFm8gJ4ZRI39kovknypxRmdG7poCZSbOwJC-BsOFKwQprtKhfwuuALht0FLAX3zMjTxadqgc_kv47cuVerGwchLqO4p9TCBv6Ko1Ag"/>
-<p class="font-headline-md text-headline-md text-primary font-bold">Guru Informatika</p>
-<p class="font-body-sm text-on-surface-variant">Tahun Ajaran 2025/2026</p>
+<img id="foto-profil-sidebar" class="w-12 h-12 rounded-full mb-3 object-cover border-2 border-primary-fixed" data-alt="Profil Guru" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDWsZONDKHPCjR5qhw7gl2rzf3Pg0QotMOW83tUbeJmftb07Sfqk5oncZdli1lEpRKAYRaae8XiyjRIPJ0UeYdjUIPFDBMXd1H32-gKpt0O2C0LnRz8Ia0hO5RO8IA3TQQ6uHpEFdeVV-cl6iYw32xUYGMjfuYI4HzWhaQCqAFm8gJ4ZRI39kovknypxRmdG7poCZSbOwJC-BsOFKwQprtKhfwuuALht0FLAX3zMjTxadqgc_kv47cuVerGwchLqO4p9TCBv6Ko1Ag"/>
+<p id="nama-guru-sidebar" class="font-headline-md text-headline-md text-primary font-bold">Guru Informatika</p>
+<p id="tahun-ajaran-sidebar" class="font-body-sm text-on-surface-variant">Tahun Ajaran 2025/2026</p>
 <span class="inline-flex items-center px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-fixed text-label-sm mt-2">Sesi Aktif</span>
 </div>
 <nav class="flex flex-col gap-1">
@@ -177,7 +177,7 @@
 <section class="mb-stack-lg">
 <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
 <div>
-<h3 class="font-display-lg text-display-lg text-on-surface">Selamat Datang, Guru Informatika</h3>
+<h3 id="sapaan-guru" class="font-display-lg text-display-lg text-on-surface">Selamat Datang, Guru Informatika</h3>
 <p class="font-body-lg text-body-lg text-tertiary mt-2">Selamat datang di dashboard utama Anda.</p>
 </div>
 </section>
@@ -365,6 +365,9 @@
         document.addEventListener('DOMContentLoaded', () => {
             if (typeof loadJadwal === 'function') {
                 loadJadwal();
+            }
+            if (typeof loadProfil === 'function') {
+                loadProfil();
             }
         });
     </script>
