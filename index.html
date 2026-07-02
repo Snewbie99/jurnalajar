@@ -368,6 +368,8 @@
             }
             if (typeof loadProfil === 'function') {
                 loadProfil();
+            } else {
+                alert("Fungsi loadProfil TIDAK DITEMUKAN! Ini berarti browser Anda masih menggunakan app.js versi lama (CACHE). Silakan tekan Ctrl+F5!");
             }
         });
     </script>
