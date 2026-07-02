@@ -86,7 +86,7 @@ async function loadJadwalMingguan() {
     const loader = document.getElementById('loader-jadwal');
     const container = document.getElementById('schedule-container');
 
-    if(!container) return; 
+    if (!container) return;
 
     if (GAS_URL === "YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE") return;
 
@@ -94,16 +94,16 @@ async function loadJadwalMingguan() {
         loader.classList.remove('hidden');
         const response = await fetch(`${GAS_URL}?action=getJadwal`);
         const result = await response.json();
-        
+
         loader.classList.add('hidden');
 
         if (result.status === "success" && result.data.length > 0) {
-            container.innerHTML = ''; 
+            container.innerHTML = '';
 
             const grouped = {};
             result.data.forEach(item => {
                 const hari = item.Hari || 'Lainnya';
-                if(!grouped[hari]) grouped[hari] = [];
+                if (!grouped[hari]) grouped[hari] = [];
                 grouped[hari].push(item);
             });
 
@@ -128,7 +128,7 @@ async function loadJadwalMingguan() {
         } else {
             container.innerHTML = `<p style="text-align:center; color: var(--text-muted);">Tidak ada jadwal.</p>`;
         }
-    } catch(err) {
+    } catch (err) {
         console.error(err);
     }
 }
