@@ -231,16 +231,19 @@
                             <div class="border-b border-outline-variant"></div>
                         </div>
 
-                        <!-- Dummy Istirahat (Berada di dalam area Grid Kolom 2 hingga 6) -->
-                        <div style="grid-column: 2 / span 5; grid-row: 1 / span 8; position: relative; pointer-events: none;">
-                            <div class="absolute w-full h-[80px] p-1 z-0 opacity-50" style="top: 320px;">
-                                <div class="w-full h-full border-y-2 border-dashed border-outline-variant bg-surface-container flex items-center justify-center">
-                                    <p class="text-tertiary font-bold tracking-widest uppercase text-sm">ISTIRAHAT 1 (12:00 - 13:00)</p>
+                        <!-- Wadah Events Dinamis dengan display: contents agar mewarisi Grid Parent -->
+                        <div id="dynamic-events" class="contents">
+                            <!-- Dummy Istirahat (Berada di dalam area Grid Kolom 2 hingga 6) -->
+                            <div style="grid-column: 2 / span 5; grid-row: 1 / span 8; position: relative; pointer-events: none;">
+                                <div class="absolute w-full h-[80px] p-1 z-0 opacity-50" style="top: 320px;">
+                                    <div class="w-full h-full border-y-2 border-dashed border-outline-variant bg-surface-container flex items-center justify-center">
+                                        <p class="text-tertiary font-bold tracking-widest uppercase text-sm">ISTIRAHAT 1 (12:00 - 13:00)</p>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="absolute w-full h-[40px] p-1 z-0 opacity-50" style="top: 600px;">
-                                <div class="w-full h-full border-y-2 border-dashed border-outline-variant bg-surface-container flex items-center justify-center">
-                                    <p class="text-tertiary font-bold tracking-widest uppercase text-xs">ISTIRAHAT 2 (15:30 - 16:00)</p>
+                                <div class="absolute w-full h-[40px] p-1 z-0 opacity-50" style="top: 600px;">
+                                    <div class="w-full h-full border-y-2 border-dashed border-outline-variant bg-surface-container flex items-center justify-center">
+                                        <p class="text-tertiary font-bold tracking-widest uppercase text-xs">ISTIRAHAT 2 (15:30 - 16:00)</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
