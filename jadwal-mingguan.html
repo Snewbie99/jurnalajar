@@ -1,34 +1,254 @@
 <!DOCTYPE html>
-<html lang="id">
+<html class="light" lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jadwal 1 Minggu - Jurnal Mengajar</title>
-    <link rel="stylesheet" href="style.css">
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Jadwal 1 Minggu - Teacher Dashboard</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+    <!-- Material Symbols -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#004ac6",
+                        "on-primary": "#ffffff",
+                        "primary-container": "#2563eb",
+                        "on-primary-container": "#eeefff",
+                        "secondary": "#006c49",
+                        "on-secondary": "#ffffff",
+                        "secondary-container": "#6cf8bb",
+                        "on-secondary-container": "#00714d",
+                        "tertiary": "#525657",
+                        "on-tertiary": "#ffffff",
+                        "surface": "#f8f9ff",
+                        "on-surface": "#0d1c2e",
+                        "on-surface-variant": "#434655",
+                        "outline": "#737686",
+                        "outline-variant": "#c3c6d7",
+                        "background": "#f8f9ff",
+                        "surface-container-low": "#eff4ff",
+                        "surface-container": "#e6eeff",
+                        "surface-container-high": "#dce9ff",
+                        "primary-fixed": "#dbe1ff",
+                        "secondary-fixed-dim": "#4edea3",
+                        "on-secondary-fixed-variant": "#005236",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "surface-tint": "#0053db",
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #f8f9ff;
+            color: #0d1c2e;
+            font-family: 'Inter', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: 80px repeat(5, 1fr);
+            grid-auto-rows: minmax(80px, auto);
+        }
+        .bento-card {
+            background: #ffffff;
+            border: 1px solid #E2E8F0;
+            border-radius: 1rem;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .bento-card:hover {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+        }
+        .loader {
+            border: 3px solid rgba(0,0,0,0.1);
+            border-top: 3px solid #004ac6;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        .hidden { display: none !important; }
+    </style>
 </head>
-<body>
-    <div class="container">
-        <div class="top-bar">
-            <a href="index.html" class="back-btn">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-            </a>
-            <h1 style="margin: 0;">Jadwal 1 Minggu</h1>
-        </div>
-
-        <div class="glass-panel">
-            <div id="loader-jadwal" class="loader hidden"></div>
-            <div id="schedule-container" class="schedule-list">
-                <!-- Data jadwal mingguan akan dirender oleh JavaScript -->
+<body class="flex min-h-screen overflow-hidden">
+    <!-- NavigationDrawer (Persistent Sidebar) -->
+    <aside class="hidden md:flex flex-col h-full w-[280px] fixed left-0 top-0 z-40 bg-surface-container-low border-r border-outline-variant py-8">
+        <!-- Header / Profile -->
+        <div class="px-6 mb-8">
+            <div class="flex items-center gap-3">
+                <div class="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white font-bold text-xl">
+                    GI
+                </div>
+                <div>
+                    <h2 class="font-bold text-sm text-on-surface">Guru Informatika</h2>
+                    <p class="text-xs text-on-surface-variant">Thn Ajaran 2025/2026</p>
+                </div>
             </div>
         </div>
-    </div>
+        <!-- Nav Items -->
+        <nav class="flex-grow space-y-1">
+            <a href="index.html" class="text-on-surface-variant mx-2 px-4 py-3 hover:bg-surface-variant transition-colors cursor-pointer rounded-full flex items-center gap-3">
+                <span class="material-symbols-outlined">dashboard</span>
+                <span class="text-sm">Dashboard Utama</span>
+            </a>
+            <a href="jadwal-mingguan.html" class="bg-secondary-container text-on-secondary-container rounded-full mx-2 px-4 py-3 font-bold flex items-center gap-3">
+                <span class="material-symbols-outlined">calendar_today</span>
+                <span class="text-sm">Jadwal 1 Minggu</span>
+            </a>
+            <a href="daftar-siswa.html" class="text-on-surface-variant mx-2 px-4 py-3 hover:bg-surface-variant transition-colors cursor-pointer rounded-full flex items-center gap-3">
+                <span class="material-symbols-outlined">group</span>
+                <span class="text-sm">Daftar Siswa</span>
+            </a>
+            <a href="rekap-absensi.html" class="text-on-surface-variant mx-2 px-4 py-3 hover:bg-surface-variant transition-colors cursor-pointer rounded-full flex items-center gap-3">
+                <span class="material-symbols-outlined">analytics</span>
+                <span class="text-sm">Rekap Absensi</span>
+            </a>
+        </nav>
+    </aside>
 
-    <!-- Script konfigurasi dan logika -->
+    <!-- Main Content Area -->
+    <main class="flex-1 ml-0 md:ml-[280px] h-screen overflow-y-auto bg-background">
+        <!-- TopAppBar -->
+        <header class="w-full top-0 sticky z-30 bg-surface border-b border-outline-variant flex justify-between items-center px-4 md:px-6 h-16">
+            <h1 class="font-bold text-xl text-primary font-[Manrope]">Jadwal Mingguan</h1>
+            <div class="flex items-center gap-4">
+                <button class="flex items-center gap-2 px-4 py-2 border border-primary text-primary rounded-lg text-sm hover:bg-surface-container-low transition-colors" onclick="window.print()">
+                    <span class="material-symbols-outlined text-[20px]">print</span>
+                    Print View
+                </button>
+            </div>
+        </header>
+
+        <!-- Page Content -->
+        <div class="p-4 md:p-6 pb-32">
+            <div class="bento-card p-6 overflow-hidden">
+                <div class="flex justify-between items-center mb-6">
+                    <div class="flex items-center gap-4">
+                        <h2 class="font-bold text-2xl font-[Manrope]">Kalender Kelas</h2>
+                        <div id="loader-jadwal" class="loader hidden"></div>
+                    </div>
+                </div>
+
+                <!-- Calendar Content -->
+                <div class="relative rounded-xl border border-outline-variant overflow-hidden bg-white">
+                    <!-- Day Headers -->
+                    <div class="calendar-grid border-b border-outline-variant bg-surface-container-low">
+                        <div class="p-4 border-r border-outline-variant"></div>
+                        <div class="p-4 border-r border-outline-variant text-center font-bold text-sm">SENIN</div>
+                        <div class="p-4 border-r border-outline-variant text-center font-bold text-sm">SELASA</div>
+                        <div class="p-4 border-r border-outline-variant text-center font-bold text-sm">RABU</div>
+                        <div class="p-4 border-r border-outline-variant text-center font-bold text-sm">KAMIS</div>
+                        <div class="p-4 text-center font-bold text-sm">JUMAT</div>
+                    </div>
+                    
+                    <!-- Scrollable Grid Body -->
+                    <div class="calendar-grid relative" style="height: 640px;">
+                        <!-- Time Markers 08:00 to 15:00 -->
+                        <div class="contents">
+                            <div class="p-4 border-r border-b border-outline-variant text-right text-xs text-on-surface-variant">08:00</div>
+                            <div class="border-r border-b border-outline-variant bg-slate-50/30"></div>
+                            <div class="border-r border-b border-outline-variant bg-slate-50/30"></div>
+                            <div class="border-r border-b border-outline-variant bg-slate-50/30"></div>
+                            <div class="border-r border-b border-outline-variant bg-slate-50/30"></div>
+                            <div class="border-b border-outline-variant bg-slate-50/30"></div>
+                        </div>
+                        <div class="contents">
+                            <div class="p-4 border-r border-b border-outline-variant text-right text-xs text-on-surface-variant">09:00</div>
+                            <div class="border-r border-b border-outline-variant"></div>
+                            <div class="border-r border-b border-outline-variant"></div>
+                            <div class="border-r border-b border-outline-variant"></div>
+                            <div class="border-r border-b border-outline-variant"></div>
+                            <div class="border-b border-outline-variant"></div>
+                        </div>
+                        <div class="contents">
+                            <div class="p-4 border-r border-b border-outline-variant text-right text-xs text-on-surface-variant">10:00</div>
+                            <div class="border-r border-b border-outline-variant"></div>
+                            <div class="border-r border-b border-outline-variant"></div>
+                            <div class="border-r border-b border-outline-variant"></div>
+                            <div class="border-r border-b border-outline-variant"></div>
+                            <div class="border-b border-outline-variant"></div>
+                        </div>
+                        <div class="contents">
+                            <div class="p-4 border-r border-b border-outline-variant text-right text-xs text-on-surface-variant">11:00</div>
+                            <div class="border-r border-b border-outline-variant"></div>
+                            <div class="border-r border-b border-outline-variant"></div>
+                            <div class="border-r border-b border-outline-variant"></div>
+                            <div class="border-r border-b border-outline-variant"></div>
+                            <div class="border-b border-outline-variant"></div>
+                        </div>
+                        <div class="contents">
+                            <div class="p-4 border-r border-b border-outline-variant text-right text-xs text-on-surface-variant">12:00</div>
+                            <div class="border-r border-b border-outline-variant bg-surface-container-highest/20"></div>
+                            <div class="border-r border-b border-outline-variant bg-surface-container-highest/20"></div>
+                            <div class="border-r border-b border-outline-variant bg-surface-container-highest/20"></div>
+                            <div class="border-r border-b border-outline-variant bg-surface-container-highest/20"></div>
+                            <div class="border-b border-outline-variant bg-surface-container-highest/20"></div>
+                        </div>
+                        <div class="contents">
+                            <div class="p-4 border-r border-b border-outline-variant text-right text-xs text-on-surface-variant">13:00</div>
+                            <div class="border-r border-b border-outline-variant"></div>
+                            <div class="border-r border-b border-outline-variant"></div>
+                            <div class="border-r border-b border-outline-variant"></div>
+                            <div class="border-r border-b border-outline-variant"></div>
+                            <div class="border-b border-outline-variant"></div>
+                        </div>
+                        <div class="contents">
+                            <div class="p-4 border-r border-b border-outline-variant text-right text-xs text-on-surface-variant">14:00</div>
+                            <div class="border-r border-b border-outline-variant"></div>
+                            <div class="border-r border-b border-outline-variant"></div>
+                            <div class="border-r border-b border-outline-variant"></div>
+                            <div class="border-r border-b border-outline-variant"></div>
+                            <div class="border-b border-outline-variant"></div>
+                        </div>
+                        <div class="contents">
+                            <div class="p-4 border-r text-right text-xs text-on-surface-variant">15:00</div>
+                            <div class="border-r"></div>
+                            <div class="border-r"></div>
+                            <div class="border-r"></div>
+                            <div class="border-r"></div>
+                            <div></div>
+                        </div>
+                        
+                        <!-- Dynamic Events Container -->
+                        <div id="dynamic-events" class="absolute inset-0 z-10 w-full h-full pointer-events-none">
+                            <!-- Events akan diinject disini via JS -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Mobile Bottom Nav -->
+    <nav class="md:hidden fixed bottom-0 left-0 w-full flex justify-around items-center px-4 h-20 bg-surface border-t border-outline-variant z-50">
+        <a href="index.html" class="flex flex-col items-center justify-center text-on-surface-variant">
+            <span class="material-symbols-outlined">dashboard</span>
+            <span class="text-[10px] font-bold">Dashboard</span>
+        </a>
+        <a href="jadwal-mingguan.html" class="flex flex-col items-center justify-center text-primary font-bold">
+            <span class="material-symbols-outlined">calendar_today</span>
+            <span class="text-[10px] font-bold">Jadwal</span>
+        </a>
+        <a href="daftar-siswa.html" class="flex flex-col items-center justify-center text-on-surface-variant">
+            <span class="material-symbols-outlined">group</span>
+            <span class="text-[10px] font-bold">Siswa</span>
+        </a>
+        <a href="rekap-absensi.html" class="flex flex-col items-center justify-center text-on-surface-variant">
+            <span class="material-symbols-outlined">analytics</span>
+            <span class="text-[10px] font-bold">Absensi</span>
+        </a>
+    </nav>
     <script src="app.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            loadJadwalMingguan();
-        });
-    </script>
 </body>
 </html>
