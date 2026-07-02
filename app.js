@@ -421,3 +421,34 @@ async function submitNilai() {
 
     await sendPostRequest(payload, "saveNilai", "btn-submit-nilai");
 }
+
+// Fitur Profil
+async function loadProfil() {
+    try {
+        const response = await fetch(`${GAS_URL}?action=getProfil`);
+        const result = await response.json();
+        
+        if (result.status === "success" && result.data) {
+            const profil = result.data;
+            const namaGuru = profil['Nama Guru'] || profil['Nama'];
+            const tahunAjaran = profil['Tahun Ajaran'];
+            const mapel = profil['Mata Pelajaran'];
+            const fotoUrl = profil['Foto Profil URL'];
+
+            // Update DOM jika ada id
+            const elSapaan = document.getElementById('sapaan-guru');
+            if (elSapaan && namaGuru) elSapaan.textContent = `Selamat Datang, ${namaGuru}`;
+
+            const elNamaSidebar = document.getElementById('nama-guru-sidebar');
+            if (elNamaSidebar && namaGuru) elNamaSidebar.textContent = namaGuru;
+
+            const elTahunSidebar = document.getElementById('tahun-ajaran-sidebar');
+            if (elTahunSidebar && tahunAjaran) elTahunSidebar.textContent = tahunAjaran;
+
+            const elFoto = document.getElementById('foto-profil-sidebar');
+            if (elFoto && fotoUrl) elFoto.src = fotoUrl;
+        }
+    } catch (error) {
+        console.error("Gagal memuat profil:", error);
+    }
+}
