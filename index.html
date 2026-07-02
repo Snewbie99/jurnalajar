@@ -1,58 +1,272 @@
 <!DOCTYPE html>
-<html lang="id">
+<html class="light" lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Guru - Jurnal Mengajar</title>
-    <link rel="stylesheet" href="style.css">
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Jurnal Mengajar - Teacher Dashboard</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9ff;
+        }
+        .sidebar-active {
+            background-color: #6cf8bb;
+            color: #002113;
+            border-radius: 9999px;
+            font-weight: 700;
+        }
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 24px;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(8px);
+            border: 1px solid #e2e8f0;
+        }
+        .loader {
+            border: 3px solid rgba(0,0,0,0.1);
+            border-top: 3px solid var(--primary, #004ac6);
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .hidden { display: none !important; }
+    </style>
+    <script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-primary-container": "#eeefff",
+                      "tertiary": "#525657",
+                      "surface-tint": "#0053db",
+                      "on-primary-fixed": "#00174b",
+                      "on-secondary-fixed-variant": "#005236",
+                      "surface-bright": "#f8f9ff",
+                      "on-secondary-container": "#00714d",
+                      "surface-container": "#e6eeff",
+                      "surface-container-lowest": "#ffffff",
+                      "tertiary-fixed-dim": "#c4c7c9",
+                      "on-secondary": "#ffffff",
+                      "inverse-surface": "#233144",
+                      "background": "#f8f9ff",
+                      "surface-container-high": "#dce9ff",
+                      "on-error": "#ffffff",
+                      "surface-container-highest": "#d5e3fc",
+                      "secondary-container": "#6cf8bb",
+                      "surface-container-low": "#eff4ff",
+                      "on-tertiary-fixed-variant": "#444749",
+                      "surface-dim": "#ccdbf3",
+                      "outline": "#737686",
+                      "primary-fixed": "#dbe1ff",
+                      "on-surface-variant": "#434655",
+                      "error-container": "#ffdad6",
+                      "on-error-container": "#93000a",
+                      "on-secondary-fixed": "#002113",
+                      "surface-variant": "#d5e3fc",
+                      "outline-variant": "#c3c6d7",
+                      "on-tertiary": "#ffffff",
+                      "primary-container": "#2563eb",
+                      "secondary-fixed": "#6ffbbe",
+                      "primary-fixed-dim": "#b4c5ff",
+                      "inverse-primary": "#b4c5ff",
+                      "on-primary-fixed-variant": "#003ea8",
+                      "on-tertiary-container": "#eff1f3",
+                      "primary": "#004ac6",
+                      "inverse-on-surface": "#eaf1ff",
+                      "tertiary-container": "#6b6e70",
+                      "secondary-fixed-dim": "#4edea3",
+                      "on-primary": "#ffffff",
+                      "surface": "#f8f9ff",
+                      "error": "#ba1a1a",
+                      "tertiary-fixed": "#e0e3e5",
+                      "on-tertiary-fixed": "#191c1e",
+                      "on-background": "#0d1c2e",
+                      "on-surface": "#0d1c2e",
+                      "secondary": "#006c49"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "gutter": "24px",
+                      "stack-md": "16px",
+                      "container-padding-md": "24px",
+                      "base": "8px",
+                      "container-padding-lg": "40px",
+                      "stack-sm": "8px",
+                      "stack-lg": "32px",
+                      "container-padding-sm": "16px"
+              },
+              "fontFamily": {
+                      "headline-md": ["Manrope"],
+                      "body-md": ["Inter"],
+                      "label-sm": ["Inter"],
+                      "label-md": ["Inter"],
+                      "display-lg": ["Manrope"],
+                      "body-lg": ["Inter"],
+                      "body-sm": ["Inter"],
+                      "headline-lg": ["Manrope"],
+                      "headline-lg-mobile": ["Manrope"]
+              }
+            },
+          },
+        }
+    </script>
 </head>
-<body>
-    <div class="container">
-        <header>
-            <h1>Jurnal Mengajar</h1>
-            <p>Manajemen Pembelajaran Informatika</p>
-        </header>
-
-        <div class="glass-panel profile-card">
-            <div class="avatar">
-                <!-- Inisial Guru -->
-                GI
-            </div>
-            <div class="profile-info">
-                <h2>Guru Informatika</h2>
-                <p>NIP: 198001012005011001</p>
-                <p>Tahun Ajaran 2025/2026 Semester 2</p>
-            </div>
+<body class="flex min-h-screen bg-background">
+<!-- NavigationDrawer (Persistent Sidebar for Desktop) -->
+<aside class="hidden md:flex flex-col h-full w-[280px] fixed left-0 top-0 z-40 bg-surface-container-low border-r border-outline-variant py-stack-lg transition-all duration-200">
+    <div class="px-6 mb-8 flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-on-primary">
+            <span class="material-symbols-outlined">school</span>
         </div>
+        <h1 class="font-headline-md text-2xl font-bold text-primary">Jurnal Mengajar</h1>
+    </div>
+    
+    <!-- Profile Header -->
+    <div class="flex flex-col items-start px-6 mb-8">
+        <div class="w-12 h-12 rounded-full mb-3 bg-primary text-white flex items-center justify-center text-xl font-bold border-2 border-primary-fixed">GI</div>
+        <p class="font-headline-md text-xl text-primary font-bold">Guru Informatika</p>
+        <p class="font-body-sm text-on-surface-variant">Thn Ajaran 2025/2026</p>
+    </div>
+    
+    <nav class="flex flex-col gap-1">
+        <a class="bg-secondary-container text-on-secondary-container rounded-full mx-2 px-4 py-3 font-bold flex items-center gap-3 cursor-pointer transition-all duration-200" href="index.html">
+            <span class="material-symbols-outlined">dashboard</span>
+            <span class="font-body-md">Dashboard Utama</span>
+        </a>
+        <a class="text-on-surface-variant hover:bg-surface-variant mx-2 px-4 py-3 flex items-center gap-3 cursor-pointer transition-all duration-200" href="jadwal-mingguan.html">
+            <span class="material-symbols-outlined">calendar_month</span>
+            <span class="font-body-md">Jadwal 1 Minggu</span>
+        </a>
+        <a class="text-on-surface-variant hover:bg-surface-variant mx-2 px-4 py-3 flex items-center gap-3 cursor-pointer transition-all duration-200" href="daftar-siswa.html">
+            <span class="material-symbols-outlined">group</span>
+            <span class="font-body-md">Daftar Siswa</span>
+        </a>
+        <a class="text-on-surface-variant hover:bg-surface-variant mx-2 px-4 py-3 flex items-center gap-3 cursor-pointer transition-all duration-200" href="rekap-absensi.html">
+            <span class="material-symbols-outlined">analytics</span>
+            <span class="font-body-md">Rekap Absensi</span>
+        </a>
+    </nav>
+</aside>
 
-        <div class="glass-panel" style="margin-bottom: 20px;">
-            <h3 style="margin-bottom: 20px;">Menu Cepat</h3>
-            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
-                <a href="jadwal-mingguan.html" class="btn" style="padding: 10px; font-size: 0.9rem;">📅 Jadwal 1 Minggu</a>
-                <a href="daftar-siswa.html" class="btn" style="padding: 10px; font-size: 0.9rem; background: var(--primary-hover);">👥 Daftar Siswa</a>
-                <a href="rekap-absensi.html" class="btn" style="padding: 10px; font-size: 0.9rem; background: var(--success);">📊 Rekap Absensi</a>
+<!-- Main Content Area -->
+<main class="flex-1 md:ml-[280px] pb-24 md:pb-8">
+    <!-- TopAppBar -->
+    <header class="w-full top-0 sticky z-30 bg-surface border-b border-outline-variant h-16 flex justify-between items-center px-container-padding-sm md:px-container-padding-md">
+        <div class="flex items-center gap-4">
+            <div class="md:hidden w-8 h-8 rounded-full bg-primary-fixed flex items-center justify-center text-primary">
+                <span class="material-symbols-outlined">menu</span>
             </div>
+            <h2 class="font-headline-md text-xl font-bold text-primary">Dashboard</h2>
         </div>
+        <div class="flex items-center gap-4">
+            <div class="hidden sm:flex flex-col items-end mr-2">
+                <span class="font-label-md text-on-surface font-bold" id="current-date">Today</span>
+            </div>
+            <button class="w-10 h-10 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-surface-container-low transition-colors">
+                <span class="material-symbols-outlined">settings</span>
+            </button>
+        </div>
+    </header>
 
-        <div class="glass-panel">
-            <h3 style="margin-bottom: 20px;">Jadwal Hari Ini</h3>
+    <!-- Page Content -->
+    <div class="px-container-padding-sm md:px-container-padding-md py-stack-lg max-w-7xl mx-auto">
+        
+        <!-- Greeting & Summary -->
+        <section class="mb-stack-lg">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+                <div>
+                    <h3 class="font-display-lg text-4xl text-on-surface font-bold">Selamat Mengajar!</h3>
+                    <p class="font-body-lg text-lg text-tertiary mt-2">Pilih jadwal di bawah untuk memulai jurnal atau absen.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bento Grid Layout -->
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
             
-            <div id="loader-jadwal" class="loader hidden"></div>
-            <div id="error-jadwal" class="hidden" style="color: var(--danger); text-align: center;">Gagal memuat jadwal.</div>
+            <!-- Upcoming Schedule (Vertical) -->
+            <div class="md:col-span-4 glass-card rounded-xl p-6 h-full border border-outline-variant bg-white">
+                <h4 class="font-headline-md text-2xl text-on-surface mb-6 font-bold">Jadwal Hari Ini</h4>
+                
+                <div id="loader-jadwal" class="loader hidden" style="margin: 20px auto;"></div>
+                <div id="error-jadwal" class="hidden text-center text-error mb-4">Gagal memuat jadwal.</div>
+
+                <div class="space-y-4" id="schedule-container">
+                    <!-- Data jadwal akan dirender oleh JavaScript dari GAS -->
+                    <p class="text-tertiary text-center text-sm">Loading...</p>
+                </div>
+
+                <a href="jadwal-mingguan.html" class="w-full mt-6 py-2 border border-primary text-primary rounded-lg font-label-md hover:bg-surface-container-low transition-colors flex justify-center items-center font-semibold text-sm">
+                    Lihat Semua Jadwal
+                </a>
+            </div>
             
-            <div id="schedule-container" class="schedule-list">
-                <!-- Data jadwal akan dirender oleh JavaScript -->
+            <!-- Quick Actions / Visual Placeholder -->
+            <div class="md:col-span-8 flex flex-col gap-gutter">
+                <div class="glass-card rounded-xl overflow-hidden h-full relative group min-h-[300px]">
+                    <div class="w-full h-full min-h-[300px] bg-cover bg-center transition-transform duration-700 group-hover:scale-110" style="background-image: url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80')"></div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-on-background/90 to-transparent flex items-end p-6">
+                        <div>
+                            <p class="text-white font-label-sm uppercase tracking-widest opacity-80 mb-1">Inspirasi Pagi</p>
+                            <h5 class="text-white text-2xl font-bold font-headline-md leading-tight">"Teknologi hanyalah alat. Dalam hal membuat anak-anak bekerja sama dan memotivasi mereka, guru adalah yang paling penting." - Bill Gates</h5>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+</main>
 
-    <!-- Script konfigurasi dan logika -->
-    <script src="app.js"></script>
-    <script>
-        // Init script for index.html
-        document.addEventListener('DOMContentLoaded', () => {
-            loadJadwal();
-        });
-    </script>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full flex justify-around items-center px-4 bg-surface border-t border-outline-variant h-20 z-50">
+    <a class="flex flex-col items-center justify-center text-primary font-bold active:scale-95 transition-transform duration-150" href="index.html">
+        <span class="material-symbols-outlined">dashboard</span>
+        <span class="font-label-sm text-xs">Dashboard</span>
+    </a>
+    <a class="flex flex-col items-center justify-center text-on-surface-variant active:scale-95 transition-transform duration-150" href="jadwal-mingguan.html">
+        <span class="material-symbols-outlined">calendar_today</span>
+        <span class="font-label-sm text-xs">Jadwal</span>
+    </a>
+    <a class="flex flex-col items-center justify-center text-on-surface-variant active:scale-95 transition-transform duration-150" href="daftar-siswa.html">
+        <span class="material-symbols-outlined">group</span>
+        <span class="font-label-sm text-xs">Siswa</span>
+    </a>
+    <a class="flex flex-col items-center justify-center text-on-surface-variant active:scale-95 transition-transform duration-150" href="rekap-absensi.html">
+        <span class="material-symbols-outlined">analytics</span>
+        <span class="font-label-sm text-xs">Absensi</span>
+    </a>
+</nav>
+
+<!-- Scripts -->
+<script src="app.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        document.getElementById('current-date').innerText = new Date().toLocaleDateString('id-ID', dateOptions);
+        
+        loadJadwal();
+    });
+</script>
 </body>
 </html>
