@@ -125,8 +125,8 @@ async function loadJadwalMingguan() {
         if (result.status === "success" && result.data.length > 0) {
             container.innerHTML = '';
 
-            // Jika container adalah dynamic-events (Tailwind Absolute Positioning)
-            if (container.id === 'dynamic-events') {
+            // Jika container adalah schedule-container (Tailwind CSS Grid Modern)
+            if (container.id === 'schedule-container') {
                 const dayMap = { 'Senin': 0, 'Selasa': 1, 'Rabu': 2, 'Kamis': 3, 'Jumat': 4 };
                 const colors = [
                     { bg: 'bg-primary-fixed', border: 'border-primary', text: 'text-primary' },
@@ -135,6 +135,15 @@ async function loadJadwalMingguan() {
                     { bg: 'bg-error-container', border: 'border-error', text: 'text-on-error-container' },
                     { bg: 'bg-secondary-container', border: 'border-secondary', text: 'text-on-secondary-container' }
                 ];
+
+                // Fungsi hash sederhana untuk menentukan warna unik namun konsisten per nama kelas
+                function getStringHash(str) {
+                    let hash = 0;
+                    for (let i = 0; i < str.length; i++) {
+                        hash = str.charCodeAt(i) + ((hash << 5) - hash);
+                    }
+                    return Math.abs(hash);
+                }
 
                 result.data.forEach((item) => {
                     const hari = item.Hari ? item.Hari.trim() : '';
@@ -161,7 +170,9 @@ async function loadJadwalMingguan() {
                     // Menggunakan CSS Grid untuk menjamin posisi kolom presisi 100% dengan garis tabel
                     let gridColumn = dayIndex + 2; // dayIndex 0 (Senin) -> kolom 2
 
-                    const color = colors[dayIndex % colors.length];
+                    // Warna unik berdasarkan nama kelas
+                    const colorIndex = getStringHash(item.Kelas || "") % colors.length;
+                    const color = colors[colorIndex];
                     const kelasEncoded = encodeURIComponent(item.Kelas);
                     let timeStr = match ? `${match[1].replace('.', ':')} - ${match[2].replace('.', ':')}` : (item.Jam || '');
 
