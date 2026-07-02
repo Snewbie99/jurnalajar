@@ -158,8 +158,9 @@ async function loadJadwalMingguan() {
                     let topPx = startTotalMins * (80 / 60);
                     let heightPx = durationMins * (80 / 60);
 
-                    let leftStyle = `calc(80px + (100% - 80px) / 5 * ${dayIndex})`;
-                    let widthStyle = `calc((100% - 80px) / 5)`;
+                    // Menggunakan persentase penuh karena container dynamic-events sekarang dimulai setelah 80px
+                    let leftStyle = `${dayIndex * 20}%`;
+                    let widthStyle = `20%`;
 
                     const color = colors[dayIndex % colors.length];
                     const kelasEncoded = encodeURIComponent(item.Kelas);
