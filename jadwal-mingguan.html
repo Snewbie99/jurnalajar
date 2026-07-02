@@ -163,11 +163,11 @@
                         <div class="p-4 text-center font-bold text-sm">JUMAT</div>
                     </div>
 
-                    <!-- Scrollable Grid Body - We add id="dynamic-events" here so app.js injects here -->
-                    <div id="dynamic-events" class="calendar-grid relative">
+                    <!-- Scrollable Grid Body -->
+                    <div class="calendar-grid relative">
                         <!-- Time Markers -->
                         <div class="contents">
-                            <div class="p-4 border-r border-b border-outline-variant text-right text-xs text-on-surface-variant">08:00</div>
+                            <div class="p-4 border-r border-b border-outline-variant text-right text-xs text-on-surface-variant h-[80px]">08:00</div>
                             <div class="border-r border-b border-outline-variant bg-slate-50/30"></div>
                             <div class="border-r border-b border-outline-variant bg-slate-50/30"></div>
                             <div class="border-r border-b border-outline-variant bg-slate-50/30"></div>
@@ -175,7 +175,7 @@
                             <div class="border-b border-outline-variant bg-slate-50/30"></div>
                         </div>
                         <div class="contents">
-                            <div class="p-4 border-r border-b border-outline-variant text-right text-xs text-on-surface-variant">09:00</div>
+                            <div class="p-4 border-r border-b border-outline-variant text-right text-xs text-on-surface-variant h-[80px]">09:00</div>
                             <div class="border-r border-b border-outline-variant"></div>
                             <div class="border-r border-b border-outline-variant"></div>
                             <div class="border-r border-b border-outline-variant"></div>
@@ -183,7 +183,7 @@
                             <div class="border-b border-outline-variant"></div>
                         </div>
                         <div class="contents">
-                            <div class="p-4 border-r border-b border-outline-variant text-right text-xs text-on-surface-variant">10:00</div>
+                            <div class="p-4 border-r border-b border-outline-variant text-right text-xs text-on-surface-variant h-[80px]">10:00</div>
                             <div class="border-r border-b border-outline-variant"></div>
                             <div class="border-r border-b border-outline-variant"></div>
                             <div class="border-r border-b border-outline-variant"></div>
@@ -191,7 +191,7 @@
                             <div class="border-b border-outline-variant"></div>
                         </div>
                         <div class="contents">
-                            <div class="p-4 border-r border-b border-outline-variant text-right text-xs text-on-surface-variant">11:00</div>
+                            <div class="p-4 border-r border-b border-outline-variant text-right text-xs text-on-surface-variant h-[80px]">11:00</div>
                             <div class="border-r border-b border-outline-variant"></div>
                             <div class="border-r border-b border-outline-variant"></div>
                             <div class="border-r border-b border-outline-variant"></div>
@@ -199,7 +199,7 @@
                             <div class="border-b border-outline-variant"></div>
                         </div>
                         <div class="contents">
-                            <div class="p-4 border-r border-b border-outline-variant text-right text-xs text-on-surface-variant">12:00</div>
+                            <div class="p-4 border-r border-b border-outline-variant text-right text-xs text-on-surface-variant h-[80px]">12:00</div>
                             <div class="border-r border-b border-outline-variant bg-surface-container-highest/20"></div>
                             <div class="border-r border-b border-outline-variant bg-surface-container-highest/20"></div>
                             <div class="border-r border-b border-outline-variant bg-surface-container-highest/20"></div>
@@ -207,7 +207,7 @@
                             <div class="border-b border-outline-variant bg-surface-container-highest/20"></div>
                         </div>
                         <div class="contents">
-                            <div class="p-4 border-r border-b border-outline-variant text-right text-xs text-on-surface-variant">13:00</div>
+                            <div class="p-4 border-r border-b border-outline-variant text-right text-xs text-on-surface-variant h-[80px]">13:00</div>
                             <div class="border-r border-b border-outline-variant"></div>
                             <div class="border-r border-b border-outline-variant"></div>
                             <div class="border-r border-b border-outline-variant"></div>
@@ -215,7 +215,7 @@
                             <div class="border-b border-outline-variant"></div>
                         </div>
                         <div class="contents">
-                            <div class="p-4 border-r border-b border-outline-variant text-right text-xs text-on-surface-variant">14:00</div>
+                            <div class="p-4 border-r border-b border-outline-variant text-right text-xs text-on-surface-variant h-[80px]">14:00</div>
                             <div class="border-r border-b border-outline-variant"></div>
                             <div class="border-r border-b border-outline-variant"></div>
                             <div class="border-r border-b border-outline-variant"></div>
@@ -223,7 +223,7 @@
                             <div class="border-b border-outline-variant"></div>
                         </div>
                         <div class="contents">
-                            <div class="p-4 border-r text-right text-xs text-on-surface-variant">15:00</div>
+                            <div class="p-4 border-r text-right text-xs text-on-surface-variant h-[80px]">15:00</div>
                             <div class="border-r"></div>
                             <div class="border-r"></div>
                             <div class="border-r"></div>
@@ -231,12 +231,14 @@
                             <div></div>
                         </div>
 
-                        <!-- Absolute Positioned Event Blocks (app.js will inject dynamic blocks here, below is fallback dummy if script fails) -->
-                        <div id="schedule-container" class="contents">
-                            <!-- Dummy Istirahat -->
-                            <div class="absolute left-[80px] top-[320px] w-[calc(100%-80px)] h-[80px] p-1 z-0 pointer-events-none opacity-50">
-                                <div class="h-full bg-surface-container-lowest border border-dashed border-outline-variant flex items-center justify-center">
-                                    <p class="text-sm font-bold text-outline uppercase tracking-widest">Waktu Istirahat (Contoh)</p>
+                        <!-- Absolute Positioned Event Blocks (app.js will inject dynamic blocks here) -->
+                        <div id="dynamic-events" class="absolute inset-0 pointer-events-none">
+                            <div id="schedule-container" class="contents">
+                                <!-- Dummy Istirahat -->
+                                <div class="absolute left-[80px] top-[320px] w-[calc(100%-80px)] h-[80px] p-1 z-0 pointer-events-none opacity-50">
+                                    <div class="h-full bg-surface-container-lowest border border-dashed border-outline-variant flex items-center justify-center">
+                                        <p class="text-sm font-bold text-outline uppercase tracking-widest">Waktu Istirahat (Contoh)</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
