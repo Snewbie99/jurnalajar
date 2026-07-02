@@ -123,7 +123,8 @@ async function loadJadwalMingguan() {
         if (loader) loader.classList.add('hidden');
 
         if (result.status === "success" && result.data.length > 0) {
-            container.innerHTML = '';
+            // Bersihkan jadwal lama tanpa menghapus dummy istirahat
+            container.querySelectorAll('.dynamic-item').forEach(el => el.remove());
 
             // Render jadwal ke dalam Grid
             if (container) {
@@ -177,7 +178,7 @@ async function loadJadwalMingguan() {
                     let timeStr = match ? `${match[1].replace('.', ':')} - ${match[2].replace('.', ':')}` : (item.Jam || '');
 
                     const html = `
-                    <div style="grid-column: ${gridColumn}; grid-row: 1 / span 8; position: relative; pointer-events: none;">
+                    <div class="dynamic-item" style="grid-column: ${gridColumn}; grid-row: 1 / span 8; position: relative; pointer-events: none;">
                         <div class="absolute p-1 z-10 pointer-events-auto hover:z-50 w-full" style="top: ${topPx}px; min-height: ${heightPx}px;">
                             <div class="block w-full min-h-full h-auto ${color.bg} border-l-4 ${color.border} rounded-lg p-2 shadow-sm hover:shadow-md hover:scale-[1.02] transition-all overflow-hidden break-words">
                                 <p class="font-bold text-[10px] md:text-xs ${color.text} mb-1 uppercase break-words">${item.Kelas || 'Kelas'}</p>
