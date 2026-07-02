@@ -84,46 +84,100 @@ async function loadJadwal() {
 
 async function loadJadwalMingguan() {
     const loader = document.getElementById('loader-jadwal');
-    const container = document.getElementById('schedule-container');
+    // Cari container untuk tailwind (dynamic-events) atau fallback (schedule-container)
+    const container = document.getElementById('dynamic-events') || document.getElementById('schedule-container');
 
     if (!container) return;
 
     if (GAS_URL === "YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE") return;
 
     try {
-        loader.classList.remove('hidden');
+        if(loader) loader.classList.remove('hidden');
         const response = await fetch(`${GAS_URL}?action=getJadwal`);
         const result = await response.json();
 
-        loader.classList.add('hidden');
+        if(loader) loader.classList.add('hidden');
 
         if (result.status === "success" && result.data.length > 0) {
             container.innerHTML = '';
 
-            const grouped = {};
-            result.data.forEach(item => {
-                const hari = item.Hari || 'Lainnya';
-                if (!grouped[hari]) grouped[hari] = [];
-                grouped[hari].push(item);
-            });
+            // Jika container adalah dynamic-events (Tailwind Absolute Positioning)
+            if (container.id === 'dynamic-events') {
+                const dayMap = { 'Senin': 0, 'Selasa': 1, 'Rabu': 2, 'Kamis': 3, 'Jumat': 4 };
+                const colors = [
+                    { bg: 'bg-primary-fixed', border: 'border-primary', text: 'text-primary' },
+                    { bg: 'bg-secondary-fixed-dim', border: 'border-secondary', text: 'text-on-secondary-fixed-variant' },
+                    { bg: 'bg-surface-container-high', border: 'border-surface-tint', text: 'text-on-primary-fixed-variant' },
+                    { bg: 'bg-error-container', border: 'border-error', text: 'text-on-error-container' },
+                    { bg: 'bg-secondary-container', border: 'border-secondary', text: 'text-on-secondary-container' }
+                ];
 
-            for (const hari in grouped) {
-                const htmlHeader = `<h4 style="margin: 15px 0 10px 0; color: #818cf8; border-bottom: 1px solid var(--glass-border); padding-bottom: 5px;">${hari}</h4>`;
-                container.insertAdjacentHTML('beforeend', htmlHeader);
+                result.data.forEach((item) => {
+                    const hari = item.Hari ? item.Hari.trim() : '';
+                    if(dayMap[hari] === undefined) return; 
+                    const dayIndex = dayMap[hari];
 
-                grouped[hari].forEach(item => {
+                    let startH = 8, startM = 0, endH = 9, endM = 0;
+                    let match = (item.Jam || "").match(/\(([\d\.]+)-([\d\.]+)\)/);
+                    if(match) {
+                        let p1 = match[1].split('.');
+                        let p2 = match[2].split('.');
+                        if(p1.length >= 2) { startH = parseInt(p1[0]); startM = parseInt(p1[1]); }
+                        if(p2.length >= 2) { endH = parseInt(p2[0]); endM = parseInt(p2[1]); }
+                    }
+                    
+                    let startTotalMins = (startH - 8) * 60 + startM;
+                    let endTotalMins = (endH - 8) * 60 + endM;
+                    let durationMins = endTotalMins - startTotalMins;
+                    if(durationMins <= 0) durationMins = 35; // fallback
+                    
+                    let topPx = startTotalMins * (80/60);
+                    let heightPx = durationMins * (80/60);
+                    
+                    let leftStyle = `calc(80px + (100% - 80px) / 5 * ${dayIndex})`;
+                    let widthStyle = `calc((100% - 80px) / 5)`;
+                    
+                    const color = colors[dayIndex % colors.length];
                     const kelasEncoded = encodeURIComponent(item.Kelas);
+                    let timeStr = match ? `${match[1].replace('.',':')} - ${match[2].replace('.',':')}` : (item.Jam || '');
+
                     const html = `
-                        <a href="kelas.html?kelas=${kelasEncoded}" class="schedule-item">
-                            <div>
-                                <div class="schedule-time">${item.Jam || ''}</div>
-                                <div class="schedule-class">${item.Kelas || 'Kelas'}</div>
-                                <div class="schedule-subject">${item.Materi || 'Informatika'}</div>
-                            </div>
+                    <div class="absolute p-1 z-10 pointer-events-auto" style="left: ${leftStyle}; top: ${topPx}px; width: ${widthStyle}; height: ${heightPx}px;">
+                        <a href="kelas.html?kelas=${kelasEncoded}" class="block h-full ${color.bg} border-l-4 ${color.border} rounded-lg p-2 shadow-sm hover:scale-[1.02] transition-transform cursor-pointer no-underline text-left overflow-hidden">
+                            <p class="font-bold text-[10px] md:text-xs ${color.text} mb-1 uppercase truncate">${item.Kelas || 'Kelas'}</p>
+                            <p class="text-[10px] md:text-sm font-bold truncate text-on-surface leading-tight">${item.Materi || 'Informatika'}</p>
+                            <p class="text-[9px] md:text-[11px] ${color.text} mt-1 truncate">${timeStr}</p>
                         </a>
-                    `;
+                    </div>`;
                     container.insertAdjacentHTML('beforeend', html);
                 });
+            } else {
+                // Fallback rendering lama
+                const grouped = {};
+                result.data.forEach(item => {
+                    const hari = item.Hari || 'Lainnya';
+                    if (!grouped[hari]) grouped[hari] = [];
+                    grouped[hari].push(item);
+                });
+
+                for (const hari in grouped) {
+                    const htmlHeader = `<h4 style="margin: 15px 0 10px 0; color: #818cf8; border-bottom: 1px solid var(--glass-border); padding-bottom: 5px;">${hari}</h4>`;
+                    container.insertAdjacentHTML('beforeend', htmlHeader);
+
+                    grouped[hari].forEach(item => {
+                        const kelasEncoded = encodeURIComponent(item.Kelas);
+                        const html = `
+                            <a href="kelas.html?kelas=${kelasEncoded}" class="schedule-item">
+                                <div>
+                                    <div class="schedule-time">${item.Jam || ''}</div>
+                                    <div class="schedule-class">${item.Kelas || 'Kelas'}</div>
+                                    <div class="schedule-subject">${item.Materi || 'Informatika'}</div>
+                                </div>
+                            </a>
+                        `;
+                        container.insertAdjacentHTML('beforeend', html);
+                    });
+                }
             }
         } else {
             container.innerHTML = `<p style="text-align:center; color: var(--text-muted);">Tidak ada jadwal.</p>`;
