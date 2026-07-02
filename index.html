@@ -140,27 +140,31 @@
 </div>
 <!-- Profile Header -->
 <div class="flex flex-col items-start px-6 mb-8">
-<img class="w-12 h-12 rounded-full mb-3 object-cover border-2 border-primary-fixed" data-alt="Teacher Profile" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDWsZONDKHPCjR5qhw7gl2rzf3Pg0QotMOW83tUbeJmftb07Sfqk5oncZdli1lEpRKAYRaae8XiyjRIPJ0UeYdjUIPFDBMXd1H32-gKpt0O2C0LnRz8Ia0hO5RO8IA3TQQ6uHpEFdeVV-cl6iYw32xUYGMjfuYI4HzWhaQCqAFm8gJ4ZRI39kovknypxRmdG7poCZSbOwJC-BsOFKwQprtKhfwuuALht0FLAX3zMjTxadqgc_kv47cuVerGwchLqO4p9TCBv6Ko1Ag"/>
+<img class="w-12 h-12 rounded-full mb-3 object-cover border-2 border-primary-fixed" data-alt="A professional headshot of a friendly educator with a warm smile, wearing a professional blazer. The background is a brightly lit, modern office with soft blue and white tones, reflecting a clean corporate aesthetic with high-key lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDWsZONDKHPCjR5qhw7gl2rzf3Pg0QotMOW83tUbeJmftb07Sfqk5oncZdli1lEpRKAYRaae8XiyjRIPJ0UeYdjUIPFDBMXd1H32-gKpt0O2C0LnRz8Ia0hO5RO8IA3TQQ6uHpEFdeVV-cl6iYw32xUYGMjfuYI4HzWhaQCqAFm8gJ4ZRI39kovknypxRmdG7poCZSbOwJC-BsOFKwQprtKhfwuuALht0FLAX3zMjTxadqgc_kv47cuVerGwchLqO4p9TCBv6Ko1Ag"/>
 <p class="font-headline-md text-headline-md text-primary font-bold">Mx. Henderson</p>
 <p class="font-body-sm text-on-surface-variant">Grade 4 - Room 102</p>
 <span class="inline-flex items-center px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-fixed text-label-sm mt-2">Active Session</span>
 </div>
 <nav class="flex flex-col gap-1">
+<!-- Active Tab: Dashboard -->
 <a class="bg-secondary-container text-on-secondary-container rounded-full mx-2 px-4 py-3 font-bold flex items-center gap-3 cursor-pointer transition-all duration-200" href="index.html">
 <span class="material-symbols-outlined">dashboard</span>
 <span class="font-body-md text-body-md">Dashboard</span>
 </a>
-<a class="text-on-surface-variant hover:bg-surface-variant mx-2 px-4 py-3 flex items-center gap-3 cursor-pointer transition-all duration-200" href="jadwal-mingguan.html">
-<span class="material-symbols-outlined">calendar_today</span>
-<span class="font-body-md text-body-md">Weekly Schedule</span>
-</a>
+<!-- Students -->
 <a class="text-on-surface-variant hover:bg-surface-variant mx-2 px-4 py-3 flex items-center gap-3 cursor-pointer transition-all duration-200" href="daftar-siswa.html">
 <span class="material-symbols-outlined">group</span>
 <span class="font-body-md text-body-md">Students</span>
 </a>
+<!-- Attendance Recap -->
 <a class="text-on-surface-variant hover:bg-surface-variant mx-2 px-4 py-3 flex items-center gap-3 cursor-pointer transition-all duration-200" href="rekap-absensi.html">
 <span class="material-symbols-outlined">analytics</span>
 <span class="font-body-md text-body-md">Attendance Recap</span>
+</a>
+<!-- Weekly Schedule -->
+<a class="text-on-surface-variant hover:bg-surface-variant mx-2 px-4 py-3 flex items-center gap-3 cursor-pointer transition-all duration-200" href="jadwal-mingguan.html">
+<span class="material-symbols-outlined">calendar_today</span>
+<span class="font-body-md text-body-md">Weekly Schedule</span>
 </a>
 </nav>
 </aside>
@@ -190,7 +194,7 @@
 <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
 <div>
 <h3 class="font-display-lg text-display-lg text-on-surface">Good morning, Mx. Henderson</h3>
-<p class="font-body-lg text-body-lg text-tertiary mt-2">Welcome to your teacher dashboard.</p>
+<p class="font-body-lg text-body-lg text-tertiary mt-2">Welcome to your dashboard.</p>
 </div>
 <button class="h-[44px] px-6 bg-primary text-on-primary rounded-lg font-label-md hover:opacity-90 transition-opacity flex items-center gap-2">
 <span class="material-symbols-outlined">add</span>
@@ -247,9 +251,11 @@
 <!-- Upcoming Schedule (Vertical) -->
 <div class="md:col-span-4 glass-card rounded-xl p-6 flex flex-col">
 <h4 class="font-headline-md text-headline-md text-on-surface mb-6">Today's Schedule</h4>
-<div id="loader-jadwal" class="loader hidden" style="border: 3px solid rgba(0,0,0,0.1); border-top: 3px solid #004ac6; border-radius: 50%; width: 24px; height: 24px; animation: spin 1s linear infinite; margin: 0 auto;"></div>
+
+<div id="loader-jadwal" style="border: 3px solid rgba(0,0,0,0.1); border-top: 3px solid #004ac6; border-radius: 50%; width: 24px; height: 24px; animation: spin 1s linear infinite; margin: 0 auto; display: none;"></div>
+
 <div id="schedule-container" class="space-y-4 flex-1">
-<!-- Jadwal akan dimasukkan via JS disini -->
+<!-- Dynamic schedule will be loaded here by app.js -->
 <div class="flex gap-4 p-3 rounded-lg bg-surface-container hover:bg-surface-container-high transition-colors cursor-pointer">
 <div class="flex flex-col items-center justify-center w-12 border-r border-outline-variant pr-4">
 <span class="font-label-md text-primary">09:00</span>
@@ -258,16 +264,6 @@
 <div>
 <p class="font-label-md text-on-surface font-bold">Mathematics</p>
 <p class="font-body-sm text-tertiary">Fractions &amp; Decimals</p>
-</div>
-</div>
-<div class="flex gap-4 p-3 rounded-lg border border-outline-variant">
-<div class="flex flex-col items-center justify-center w-12 border-r border-outline-variant pr-4">
-<span class="font-label-md text-tertiary">10:30</span>
-<span class="text-[10px] text-tertiary">AM</span>
-</div>
-<div>
-<p class="font-label-md text-on-surface font-bold">English Literacy</p>
-<p class="font-body-sm text-tertiary">Creative Writing Workshop</p>
 </div>
 </div>
 </div>
@@ -330,7 +326,7 @@
                         </button>
 </div>
 <div class="glass-card rounded-xl overflow-hidden h-full relative group">
-<div class="w-full h-full min-h-[160px] bg-cover bg-center transition-transform duration-700 group-hover:scale-110" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAZyU-PqUuYPShWLmVAKw6l0bVrgYoeWJMIrmzHhzkcvhwE0LLVZa7YLDMFnHzX0VIkI5olaEfpBb85U11HqqU1Q2FpW-0tR8cjobm7SPUXYDF6J2FGtMUhZBVR3yXsA2OzxP2YdXhjtLsrXFw0ThW8BkwjJ-iKK8GFPXgrXFc9KFBSxrxo6w6uB_wKd3H1CqQh2j7mXw-Zkc-Jg_EPYID-UOqMu3pr3SmEL3O-S7x6K5yWJDPkWxbEL232OUXGNcwNHodmB1BF0OY')"></div>
+<div class="w-full h-full min-h-[160px] bg-cover bg-center transition-transform duration-700 group-hover:scale-110" data-alt="An abstract, serene digital artwork of soft green and blue gradients intertwining, representing growth and clarity. The aesthetic is clean and minimal, with blurred geometric shapes and light flares that feel sophisticated and corporate. It serves as a calming background element for a high-end dashboard." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAZyU-PqUuYPShWLmVAKw6l0bVrgYoeWJMIrmzHhzkcvhwE0LLVZa7YLDMFnHzX0VIkI5olaEfpBb85U11HqqU1Q2FpW-0tR8cjobm7SPUXYDF6J2FGtMUhZBVR3yXsA2OzxP2YdXhjtLsrXFw0ThW8BkwjJ-iKK8GFPXgrXFc9KFBSxrxo6w6uB_wKd3H1CqQh2j7mXw-Zkc-Jg_EPYID-UOqMu3pr3SmEL3O-S7x6K5yWJDPkWxbEL232OUXGNcwNHodmB1BF0OY')"></div>
 <div class="absolute inset-0 bg-gradient-to-t from-on-background/80 to-transparent flex items-end p-6">
 <div>
 <p class="text-white font-label-sm uppercase tracking-widest opacity-80 mb-1">Growth Mindset</p>
@@ -344,25 +340,31 @@
 </main>
 <!-- BottomNavBar (Mobile Only) -->
 <nav class="md:hidden fixed bottom-0 left-0 w-full flex justify-around items-center px-4 bg-surface border-t border-outline-variant h-20 z-50">
+<!-- Active: Dashboard (Closest match to current view) -->
 <a class="flex flex-col items-center justify-center text-primary font-bold active:scale-95 transition-transform duration-150" href="index.html">
 <span class="material-symbols-outlined">dashboard</span>
 <span class="font-label-sm text-label-sm">Dashboard</span>
-</a>
-<a class="flex flex-col items-center justify-center text-on-surface-variant active:scale-95 transition-transform duration-150" href="rekap-absensi.html">
-<span class="material-symbols-outlined">check_circle</span>
-<span class="font-label-sm text-label-sm">Attendance</span>
-</a>
-<a class="flex flex-col items-center justify-center text-on-surface-variant active:scale-95 transition-transform duration-150" href="jadwal-mingguan.html">
-<span class="material-symbols-outlined">calendar_today</span>
-<span class="font-label-sm text-label-sm">Schedule</span>
 </a>
 <a class="flex flex-col items-center justify-center text-on-surface-variant active:scale-95 transition-transform duration-150" href="daftar-siswa.html">
 <span class="material-symbols-outlined">group</span>
 <span class="font-label-sm text-label-sm">Students</span>
 </a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant active:scale-95 transition-transform duration-150" href="rekap-absensi.html">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-sm text-label-sm">Attendance Recap</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant active:scale-95 transition-transform duration-150" href="jadwal-mingguan.html">
+<span class="material-symbols-outlined">calendar_today</span>
+<span class="font-label-sm text-label-sm">Weekly Schedule</span>
+</a>
 </nav>
-<!-- Micro-interaction Script -->
+
+<style>
+@keyframes spin { 100% { transform: rotate(360deg); } }
+</style>
+
 <script src="app.js"></script>
+<!-- Micro-interaction Script -->
 <script>
         document.querySelectorAll('.glass-card').forEach(card => {
             card.addEventListener('mouseenter', () => {
@@ -374,8 +376,18 @@
             });
         });
 
+        // Simple mock for "start roll call"
+        const rollCallBtn = document.querySelector('button:contains("Roll Call")');
+        if(rollCallBtn) {
+            rollCallBtn.onclick = () => {
+                alert('Initializing Roll Call Session for Grade 4...');
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
-            loadJadwal();
+            if (typeof loadJadwal === 'function') {
+                loadJadwal();
+            }
         });
     </script>
 </body></html>
