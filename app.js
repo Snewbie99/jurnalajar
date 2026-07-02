@@ -167,10 +167,10 @@ async function loadJadwalMingguan() {
 
                     const html = `
                     <div class="absolute p-1 z-10 pointer-events-auto hover:z-50" style="left: ${leftStyle}; top: ${topPx}px; width: ${widthStyle}; min-height: ${heightPx}px;">
-                        <a href="kelas.html?kelas=${kelasEncoded}" class="block min-h-full h-auto ${color.bg} border-l-4 ${color.border} rounded-lg p-2 shadow-sm hover:shadow-md hover:scale-[1.02] transition-all cursor-pointer no-underline text-left">
-                            <p class="font-bold text-[10px] md:text-xs ${color.text} mb-1 uppercase">${item.Kelas || 'Kelas'}</p>
-                            <p class="text-[10px] md:text-sm font-bold text-on-surface leading-tight">${item.Materi || 'Informatika'}</p>
-                            <p class="text-[9px] md:text-[11px] ${color.text} mt-1">${timeStr}</p>
+                        <a href="kelas.html?kelas=${kelasEncoded}" class="block w-full min-h-full h-auto ${color.bg} border-l-4 ${color.border} rounded-lg p-2 shadow-sm hover:shadow-md hover:scale-[1.02] transition-all cursor-pointer no-underline text-left overflow-hidden break-words">
+                            <p class="font-bold text-[10px] md:text-xs ${color.text} mb-1 uppercase break-words">${item.Kelas || 'Kelas'}</p>
+                            <p class="text-[10px] md:text-sm font-bold text-on-surface leading-tight break-words">${item.Materi || 'Informatika'}</p>
+                            <p class="text-[9px] md:text-[11px] ${color.text} mt-1 break-words">${timeStr}</p>
                         </a>
                     </div>`;
                     container.insertAdjacentHTML('beforeend', html);
