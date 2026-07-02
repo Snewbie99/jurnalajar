@@ -231,10 +231,10 @@
                             <div class="border-b border-outline-variant"></div>
                         </div>
 
-                        <!-- Wadah Events Dinamis dengan display: contents agar mewarisi Grid Parent -->
-                        <div id="dynamic-events" class="contents">
-                            <!-- Dummy Istirahat (Berada di dalam area Grid Kolom 2 hingga 6) -->
-                            <div style="grid-column: 2 / span 5; grid-row: 1 / span 8; position: relative; pointer-events: none;">
+                        <!-- Wadah Events Dinamis: Absolute Grid Overlay agar tidak merusak grid background -->
+                        <div id="dynamic-events" class="absolute top-0 right-0 bottom-0 grid grid-cols-5 pointer-events-none" style="left: 80px;">
+                            <!-- Dummy Istirahat (Merentang 5 kolom di overlay grid ini) -->
+                            <div class="col-span-5 relative pointer-events-none">
                                 <div class="absolute w-full h-[80px] p-1 z-0 opacity-50" style="top: 320px;">
                                     <div class="w-full h-full border-y-2 border-dashed border-outline-variant bg-surface-container flex items-center justify-center">
                                         <p class="text-tertiary font-bold tracking-widest uppercase text-sm">ISTIRAHAT 1 (12:00 - 13:00)</p>
