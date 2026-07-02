@@ -158,21 +158,22 @@ async function loadJadwalMingguan() {
                     let topPx = startTotalMins * (80 / 60);
                     let heightPx = durationMins * (80 / 60);
 
-                    // Menggunakan persentase penuh karena container dynamic-events sekarang dimulai setelah 80px
-                    let leftStyle = `${dayIndex * 20}%`;
-                    let widthStyle = `20%`;
+                    // Menggunakan CSS Grid untuk menjamin posisi kolom presisi 100% dengan garis tabel
+                    let gridColumn = dayIndex + 2; // dayIndex 0 (Senin) -> kolom 2
 
                     const color = colors[dayIndex % colors.length];
                     const kelasEncoded = encodeURIComponent(item.Kelas);
                     let timeStr = match ? `${match[1].replace('.', ':')} - ${match[2].replace('.', ':')}` : (item.Jam || '');
 
                     const html = `
-                    <div class="absolute p-1 z-10 pointer-events-auto hover:z-50" style="left: ${leftStyle}; top: ${topPx}px; width: ${widthStyle}; min-height: ${heightPx}px;">
-                        <a href="kelas.html?kelas=${kelasEncoded}" class="block w-full min-h-full h-auto ${color.bg} border-l-4 ${color.border} rounded-lg p-2 shadow-sm hover:shadow-md hover:scale-[1.02] transition-all cursor-pointer no-underline text-left overflow-hidden break-words">
-                            <p class="font-bold text-[10px] md:text-xs ${color.text} mb-1 uppercase break-words">${item.Kelas || 'Kelas'}</p>
-                            <p class="text-[10px] md:text-sm font-bold text-on-surface leading-tight break-words">${item.Materi || 'Informatika'}</p>
-                            <p class="text-[9px] md:text-[11px] ${color.text} mt-1 break-words">${timeStr}</p>
-                        </a>
+                    <div style="grid-column: ${gridColumn}; grid-row: 1 / span 8; position: relative; pointer-events: none;">
+                        <div class="absolute p-1 z-10 pointer-events-auto hover:z-50 w-full" style="top: ${topPx}px; min-height: ${heightPx}px;">
+                            <a href="kelas.html?kelas=${kelasEncoded}" class="block w-full min-h-full h-auto ${color.bg} border-l-4 ${color.border} rounded-lg p-2 shadow-sm hover:shadow-md hover:scale-[1.02] transition-all cursor-pointer no-underline text-left overflow-hidden break-words">
+                                <p class="font-bold text-[10px] md:text-xs ${color.text} mb-1 uppercase break-words">${item.Kelas || 'Kelas'}</p>
+                                <p class="text-[10px] md:text-sm font-bold text-on-surface leading-tight break-words">${item.Materi || 'Informatika'}</p>
+                                <p class="text-[9px] md:text-[11px] ${color.text} mt-1 break-words">${timeStr}</p>
+                            </a>
+                        </div>
                     </div>`;
                     container.insertAdjacentHTML('beforeend', html);
                 });
