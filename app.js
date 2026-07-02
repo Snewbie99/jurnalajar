@@ -125,8 +125,8 @@ async function loadJadwalMingguan() {
         if (result.status === "success" && result.data.length > 0) {
             container.innerHTML = '';
 
-            // Jika container adalah schedule-container (Tailwind CSS Grid Modern)
-            if (container.id === 'schedule-container') {
+            // Jika container adalah dynamic-events (Tailwind CSS Grid Modern)
+            if (container.id === 'dynamic-events') {
                 const dayMap = { 'Senin': 0, 'Selasa': 1, 'Rabu': 2, 'Kamis': 3, 'Jumat': 4 };
                 const colors = [
                     { bg: 'bg-primary-fixed', border: 'border-primary', text: 'text-primary' },
