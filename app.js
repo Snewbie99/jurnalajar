@@ -57,22 +57,39 @@ async function loadJadwal() {
             } else {
                 jadwalHariIni.forEach(item => {
                     const kelasEncoded = encodeURIComponent(item.Kelas);
-                    // Parsing simple untuk jam
-                    let jamParts = (item.Jam || "08.00").split("-")[0].replace(')','').replace('(','').trim().split(".");
-                    let hour = jamParts[0] || "08";
-                    let min = jamParts[1] || "00";
-                    let ampm = parseInt(hour) >= 12 ? "PM" : "AM";
-                    let jamFormat = `${hour}:${min}`;
+                    
+                    // Format item.Jam e.g. "3 (09.10-09.45)"
+                    let jamStr = item.Jam || "1 (08.00-08.35)";
+                    let jamKeMatch = jamStr.match(/^(\d+)/);
+                    let jamKe = jamKeMatch ? jamKeMatch[1] : "1";
+                    
+                    let timeMatch = jamStr.match(/\(([\d\.]+)-/);
+                    let hour = "08";
+                    let min = "00";
+                    let ampm = "AM";
+                    if (timeMatch) {
+                        let parts = timeMatch[1].split('.');
+                        let h = parseInt(parts[0]);
+                        ampm = h >= 12 ? "PM" : "AM";
+                        let h12 = h > 12 ? h - 12 : h;
+                        if(h12 === 0) h12 = 12;
+                        hour = h12.toString().padStart(2, '0');
+                        min = parts[1] || "00";
+                    }
 
                     const html = `
-                        <a href="kelas.html?kelas=${kelasEncoded}" class="flex gap-4 p-3 rounded-lg border border-outline-variant hover:bg-surface-container-high transition-colors cursor-pointer">
+                        <a href="kelas.html?kelas=${kelasEncoded}" class="flex gap-4 p-3 rounded-lg bg-surface-container hover:bg-surface-container-high transition-colors cursor-pointer mb-3 items-center">
                             <div class="flex flex-col items-center justify-center w-12 border-r border-outline-variant pr-4">
-                                <span class="font-label-md text-primary">${jamFormat}</span>
-                                <span class="text-[10px] text-tertiary">${ampm}</span>
+                                <span class="font-label-md text-primary font-bold">${hour}:${min}</span>
+                                <span class="text-[10px] text-tertiary font-bold">${ampm}</span>
+                            </div>
+                            <div class="flex-1">
+                                <p class="font-label-md text-on-surface font-bold text-sm leading-tight mb-1">${item.Kelas || 'Kelas'}</p>
+                                <p class="font-body-sm text-tertiary text-xs line-clamp-1 mb-1">${item.Materi || 'Informatika'}</p>
+                                <p class="text-[10px] text-primary font-bold">Jam ke-${jamKe}</p>
                             </div>
                             <div>
-                                <p class="font-label-md text-on-surface font-bold">${item.Kelas || 'Kelas'}</p>
-                                <p class="font-body-sm text-tertiary">${item.Materi || 'Informatika'}</p>
+                                <span class="material-symbols-outlined text-tertiary">arrow_forward</span>
                             </div>
                         </a>
                     `;
