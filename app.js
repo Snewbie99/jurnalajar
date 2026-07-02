@@ -57,15 +57,22 @@ async function loadJadwal() {
             } else {
                 jadwalHariIni.forEach(item => {
                     const kelasEncoded = encodeURIComponent(item.Kelas);
+                    // Parsing simple untuk jam
+                    let jamParts = (item.Jam || "08.00").split("-")[0].replace(')','').replace('(','').trim().split(".");
+                    let hour = jamParts[0] || "08";
+                    let min = jamParts[1] || "00";
+                    let ampm = parseInt(hour) >= 12 ? "PM" : "AM";
+                    let jamFormat = `${hour}:${min}`;
+
                     const html = `
-                        <a href="kelas.html?kelas=${kelasEncoded}" class="schedule-item">
-                            <div>
-                                <div class="schedule-time">${item.Jam || ''}</div>
-                                <div class="schedule-class">${item.Kelas || 'Kelas'}</div>
-                                <div class="schedule-subject">${item.Materi || 'Informatika'}</div>
+                        <a href="kelas.html?kelas=${kelasEncoded}" class="flex gap-4 p-3 rounded-lg border border-outline-variant hover:bg-surface-container-high transition-colors cursor-pointer">
+                            <div class="flex flex-col items-center justify-center w-12 border-r border-outline-variant pr-4">
+                                <span class="font-label-md text-primary">${jamFormat}</span>
+                                <span class="text-[10px] text-tertiary">${ampm}</span>
                             </div>
-                            <div class="schedule-action">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            <div>
+                                <p class="font-label-md text-on-surface font-bold">${item.Kelas || 'Kelas'}</p>
+                                <p class="font-body-sm text-tertiary">${item.Materi || 'Informatika'}</p>
                             </div>
                         </a>
                     `;
@@ -73,7 +80,7 @@ async function loadJadwal() {
                 });
             }
         } else {
-            container.innerHTML = `<p style="text-align:center; color: var(--text-muted);">Jadwal kosong.</p>`;
+            container.innerHTML = `<p class="text-center text-tertiary">Jadwal kosong.</p>`;
         }
     } catch (error) {
         console.error("Gagal memuat jadwal:", error);
