@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html class="light" lang="id">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Jurnal Mengajar - Dashboard Guru</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9ff;
+        }
+        .sidebar-active {
+            background-color: #6cf8bb;
+            color: #002113;
+            border-radius: 9999px;
+            font-weight: 700;
+        }
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 24px;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(8px);
+            border: 1px solid #e2e8f0;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-primary-container": "#eeefff",
+                      "tertiary": "#525657",
+                      "surface-tint": "#0053db",
+                      "on-primary-fixed": "#00174b",
+                      "on-secondary-fixed-variant": "#005236",
+                      "surface-bright": "#f8f9ff",
+                      "on-secondary-container": "#00714d",
+                      "surface-container": "#e6eeff",
+                      "surface-container-lowest": "#ffffff",
+                      "tertiary-fixed-dim": "#c4c7c9",
+                      "on-secondary": "#ffffff",
+                      "inverse-surface": "#233144",
+                      "background": "#f8f9ff",
+                      "surface-container-high": "#dce9ff",
+                      "on-error": "#ffffff",
+                      "surface-container-highest": "#d5e3fc",
+                      "secondary-container": "#6cf8bb",
+                      "surface-container-low": "#eff4ff",
+                      "on-tertiary-fixed-variant": "#444749",
+                      "surface-dim": "#ccdbf3",
+                      "outline": "#737686",
+                      "primary-fixed": "#dbe1ff",
+                      "on-surface-variant": "#434655",
+                      "error-container": "#ffdad6",
+                      "on-error-container": "#93000a",
+                      "on-secondary-fixed": "#002113",
+                      "surface-variant": "#d5e3fc",
+                      "outline-variant": "#c3c6d7",
+                      "on-tertiary": "#ffffff",
+                      "primary-container": "#2563eb",
+                      "secondary-fixed": "#6ffbbe",
+                      "primary-fixed-dim": "#b4c5ff",
+                      "inverse-primary": "#b4c5ff",
+                      "on-primary-fixed-variant": "#003ea8",
+                      "on-tertiary-container": "#eff1f3",
+                      "primary": "#004ac6",
+                      "inverse-on-surface": "#eaf1ff",
+                      "tertiary-container": "#6b6e70",
+                      "secondary-fixed-dim": "#4edea3",
+                      "on-primary": "#ffffff",
+                      "surface": "#f8f9ff",
+                      "error": "#ba1a1a",
+                      "tertiary-fixed": "#e0e3e5",
+                      "on-tertiary-fixed": "#191c1e",
+                      "on-background": "#0d1c2e",
+                      "on-surface": "#0d1c2e",
+                      "secondary": "#006c49"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "gutter": "24px",
+                      "stack-md": "16px",
+                      "container-padding-md": "24px",
+                      "base": "8px",
+                      "container-padding-lg": "40px",
+                      "stack-sm": "8px",
+                      "stack-lg": "32px",
+                      "container-padding-sm": "16px"
+              },
+              "fontFamily": {
+                      "headline-md": ["Manrope"],
+                      "body-md": ["Inter"],
+                      "label-sm": ["Inter"],
+                      "label-md": ["Inter"],
+                      "display-lg": ["Manrope"],
+                      "body-lg": ["Inter"],
+                      "body-sm": ["Inter"],
+                      "headline-lg": ["Manrope"],
+                      "headline-lg-mobile": ["Manrope"]
+              },
+              "fontSize": {
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                      "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                      "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                      "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}]
+              }
+            },
+          },
+        }
+    </script>
+</head>
+<body class="flex min-h-screen bg-background">
+<!-- NavigationDrawer (Persistent Sidebar for Desktop) -->
+<aside class="hidden md:flex flex-col h-full w-[280px] fixed left-0 top-0 z-40 bg-surface-container-low border-r border-outline-variant py-stack-lg transition-all duration-200">
+<div class="px-6 mb-8 flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined">school</span>
+</div>
+<h1 class="font-headline-md text-headline-md font-bold text-primary">Jurnal Mengajar</h1>
+</div>
+<!-- Profile Header -->
+<div class="flex flex-col items-start px-6 mb-8">
+<img id="foto-profil-sidebar" class="w-12 h-12 rounded-full mb-3 object-cover border-2 border-primary-fixed" data-alt="Profil Guru" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDWsZONDKHPCjR5qhw7gl2rzf3Pg0QotMOW83tUbeJmftb07Sfqk5oncZdli1lEpRKAYRaae8XiyjRIPJ0UeYdjUIPFDBMXd1H32-gKpt0O2C0LnRz8Ia0hO5RO8IA3TQQ6uHpEFdeVV-cl6iYw32xUYGMjfuYI4HzWhaQCqAFm8gJ4ZRI39kovknypxRmdG7poCZSbOwJC-BsOFKwQprtKhfwuuALht0FLAX3zMjTxadqgc_kv47cuVerGwchLqO4p9TCBv6Ko1Ag"/>
+<p id="nama-guru-sidebar" class="font-headline-md text-headline-md text-primary font-bold">Guru Informatika</p>
+<p id="tahun-ajaran-sidebar" class="font-body-sm text-on-surface-variant">Tahun Ajaran 2025/2026</p>
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-fixed text-label-sm mt-2">Sesi Aktif</span>
+</div>
+<nav class="flex flex-col gap-1">
+<!-- Active Tab: Dashboard -->
+<a class="bg-secondary-container text-on-secondary-container rounded-full mx-2 px-4 py-3 font-bold flex items-center gap-3 cursor-pointer transition-all duration-200" href="index.html">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-body-md text-body-md">Dashboard Utama</span>
+</a>
+<!-- Students -->
+<a class="text-on-surface-variant hover:bg-surface-variant mx-2 px-4 py-3 flex items-center gap-3 cursor-pointer transition-all duration-200" href="daftar-siswa.html">
+<span class="material-symbols-outlined">group</span>
+<span class="font-body-md text-body-md">Daftar Siswa</span>
+</a>
+<!-- Attendance Recap -->
+<a class="text-on-surface-variant hover:bg-surface-variant mx-2 px-4 py-3 flex items-center gap-3 cursor-pointer transition-all duration-200" href="rekap-absensi.html">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-body-md text-body-md">Rekap Absensi</span>
+</a>
+<!-- Weekly Schedule -->
+<a class="text-on-surface-variant hover:bg-surface-variant mx-2 px-4 py-3 flex items-center gap-3 cursor-pointer transition-all duration-200" href="jadwal-mingguan.html">
+<span class="material-symbols-outlined">calendar_today</span>
+<span class="font-body-md text-body-md">Jadwal Mingguan</span>
+</a>
+</nav>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 md:ml-[280px] pb-24 md:pb-8">
+<!-- TopAppBar Removed -->
+<!-- Page Content -->
+<div class="px-container-padding-sm md:px-container-padding-md py-stack-lg max-w-7xl mx-auto">
+<!-- Greeting & Summary -->
+<section class="mb-stack-lg">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<h3 id="sapaan-guru" class="font-display-lg text-display-lg text-on-surface">Selamat Datang, Guru Informatika</h3>
+<p class="font-body-lg text-body-lg text-tertiary mt-2">Selamat datang di dashboard utama Anda.</p>
+</div>
+</section>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- Attendance Summary Card (Large) -->
+<div class="md:col-span-8 glass-card rounded-xl p-6 flex flex-col justify-between">
+<div class="flex justify-between items-start mb-6">
+<div>
+<h4 class="font-headline-md text-headline-md text-on-surface">Ringkasan Absensi</h4>
+<p class="font-body-sm text-tertiary">Data langsung untuk kelas Anda</p>
+</div>
+<span class="bg-secondary-fixed text-on-secondary-fixed px-3 py-1 rounded-full text-label-sm">94% Hadir</span>
+</div>
+<div class="flex flex-wrap items-center gap-8 py-4">
+<div class="flex items-center gap-4">
+<div class="w-16 h-16 rounded-full border-4 border-secondary flex items-center justify-center">
+<span class="font-headline-md text-secondary">24</span>
+</div>
+<div>
+<p class="font-label-md text-on-surface">Hadir</p>
+<p class="font-body-sm text-tertiary">Tepat waktu</p>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="w-16 h-16 rounded-full border-4 border-error flex items-center justify-center">
+<span class="font-headline-md text-error">2</span>
+</div>
+<div>
+<p class="font-label-md text-on-surface">Tidak Hadir</p>
+<p class="font-body-sm text-tertiary">Izin: 1</p>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="w-16 h-16 rounded-full border-4 border-surface-dim flex items-center justify-center">
+<span class="font-headline-md text-tertiary">1</span>
+</div>
+<div>
+<p class="font-label-md text-on-surface">Terlambat</p>
+<p class="font-body-sm text-tertiary">Jadwal 08:45</p>
+</div>
+</div>
+</div>
+<div class="mt-4 pt-4 border-t border-outline-variant flex justify-end">
+<a href="rekap-absensi.html" class="text-primary font-label-md flex items-center gap-1 hover:underline">
+                            Lihat Daftar Siswa <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+</div>
+</div>
+<!-- Upcoming Schedule (Vertical) -->
+<div class="md:col-span-4 glass-card rounded-xl p-6 flex flex-col">
+<h4 class="font-headline-md text-headline-md text-on-surface mb-6">Jadwal Hari Ini</h4>
+
+<div id="loader-jadwal" style="border: 3px solid rgba(0,0,0,0.1); border-top: 3px solid #004ac6; border-radius: 50%; width: 24px; height: 24px; animation: spin 1s linear infinite; margin: 0 auto; display: none;"></div>
+
+<div id="schedule-container" class="space-y-4 flex-1">
+<!-- Dynamic schedule will be loaded here by app.js -->
+<div class="flex gap-4 p-3 rounded-lg bg-surface-container hover:bg-surface-container-high transition-colors cursor-pointer">
+<div class="flex flex-col items-center justify-center w-12 border-r border-outline-variant pr-4">
+<span class="font-label-md text-primary">09:00</span>
+<span class="text-[10px] text-tertiary">AM</span>
+</div>
+<div>
+<p class="font-label-md text-on-surface font-bold">Informatika</p>
+<p class="font-body-sm text-tertiary">Pemrograman Dasar</p>
+</div>
+</div>
+</div>
+<a href="jadwal-mingguan.html" class="w-full mt-6 py-2 border border-primary text-primary rounded-lg font-label-md hover:bg-surface-container-low transition-colors block text-center mt-auto">
+                        Lihat Semua Jadwal
+                    </a>
+</div>
+<!-- Assessment Journal (Asymmetric Layout) -->
+<div class="md:col-span-12 lg:col-span-7 glass-card rounded-xl p-6">
+<div class="flex justify-between items-center mb-6">
+<h4 class="font-headline-md text-headline-md text-on-surface">Nilai Terbaru</h4>
+<div class="flex gap-2">
+<span class="inline-flex items-center px-3 py-1 rounded-full border border-outline-variant text-label-sm text-tertiary">Semua Kelas</span>
+<span class="material-symbols-outlined text-tertiary cursor-pointer">filter_list</span>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead>
+<tr class="border-b border-outline-variant">
+<th class="pb-3 font-label-md text-tertiary">Nama Siswa</th>
+<th class="pb-3 font-label-md text-tertiary">Tugas</th>
+<th class="pb-3 font-label-md text-tertiary">Nilai</th>
+<th class="pb-3 font-label-md text-tertiary text-right">Aksi</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-4 font-body-md text-primary">Budi Santoso</td>
+<td class="py-4 font-body-sm text-on-surface-variant">Kuis Pemrograman Dasar</td>
+<td class="py-4"><span class="px-2 py-1 bg-secondary-container text-on-secondary-container rounded font-bold">98%</span></td>
+<td class="py-4 text-right"><span class="material-symbols-outlined text-tertiary cursor-pointer">more_vert</span></td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors bg-surface-container-lowest/50">
+<td class="py-4 font-body-md text-primary">Andi Firmansyah</td>
+<td class="py-4 font-body-sm text-on-surface-variant">Laporan Perangkat Keras</td>
+<td class="py-4"><span class="px-2 py-1 bg-surface-container-highest text-on-surface rounded font-bold">82%</span></td>
+<td class="py-4 text-right"><span class="material-symbols-outlined text-tertiary cursor-pointer">more_vert</span></td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-4 font-body-md text-primary">Siti Aminah</td>
+<td class="py-4 font-body-sm text-on-surface-variant">Kuis Pemrograman Dasar</td>
+<td class="py-4"><span class="px-2 py-1 bg-error-container text-on-error-container rounded font-bold">64%</span></td>
+<td class="py-4 text-right"><span class="material-symbols-outlined text-tertiary cursor-pointer">more_vert</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Quick Actions / Visual Placeholder -->
+<div class="md:col-span-12 lg:col-span-5 flex flex-col gap-gutter">
+<div class="glass-card rounded-xl p-6 bg-primary text-on-primary">
+<div class="flex items-center gap-4 mb-4">
+<span class="material-symbols-outlined text-4xl">emoji_objects</span>
+<h4 class="font-headline-md text-headline-md">Wawasan Guru</h4>
+</div>
+<p class="font-body-md mb-6 opacity-90">3 siswa saat ini mengalami kesulitan dengan modul "Pemrograman Dasar". Apakah Anda ingin membuat sesi kelas ulasan khusus untuk besok?</p>
+<button class="w-full py-3 bg-white text-primary rounded-lg font-bold hover:bg-opacity-90 transition-all active:scale-[0.98]">
+                            Buat Lembar Ulasan
+                        </button>
+</div>
+<div class="glass-card rounded-xl overflow-hidden h-full relative group">
+<div class="w-full h-full min-h-[160px] bg-cover bg-center transition-transform duration-700 group-hover:scale-110" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAZyU-PqUuYPShWLmVAKw6l0bVrgYoeWJMIrmzHhzkcvhwE0LLVZa7YLDMFnHzX0VIkI5olaEfpBb85U11HqqU1Q2FpW-0tR8cjobm7SPUXYDF6J2FGtMUhZBVR3yXsA2OzxP2YdXhjtLsrXFw0ThW8BkwjJ-iKK8GFPXgrXFc9KFBSxrxo6w6uB_wKd3H1CqQh2j7mXw-Zkc-Jg_EPYID-UOqMu3pr3SmEL3O-S7x6K5yWJDPkWxbEL232OUXGNcwNHodmB1BF0OY')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-on-background/80 to-transparent flex items-end p-6">
+<div>
+<p class="text-white font-label-sm uppercase tracking-widest opacity-80 mb-1">Pola Pikir Berkembang</p>
+<h5 class="text-white font-headline-md">"Hal indah tentang belajar adalah tidak ada yang bisa merebutnya dari Anda."</h5>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full flex justify-around items-center px-4 bg-surface border-t border-outline-variant h-20 z-50">
+<!-- Active: Dashboard (Closest match to current view) -->
+<a class="flex flex-col items-center justify-center text-primary font-bold active:scale-95 transition-transform duration-150" href="index.html">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-sm text-label-sm">Dashboard Utama</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant active:scale-95 transition-transform duration-150" href="daftar-siswa.html">
+<span class="material-symbols-outlined">group</span>
+<span class="font-label-sm text-label-sm">Daftar Siswa</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant active:scale-95 transition-transform duration-150" href="rekap-absensi.html">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-sm text-label-sm">Rekap Absensi</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant active:scale-95 transition-transform duration-150" href="jadwal-mingguan.html">
+<span class="material-symbols-outlined">calendar_today</span>
+<span class="font-label-sm text-label-sm">Jadwal Mingguan</span>
+</a>
+</nav>
+
+<style>
+@keyframes spin { 100% { transform: rotate(360deg); } }
+</style>
+
+<script src="app.js"></script>
+<!-- Micro-interaction Script -->
+<script>
+        document.querySelectorAll('.glass-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.classList.add('shadow-lg');
+                card.style.transition = 'all 0.3s ease';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.classList.remove('shadow-lg');
+            });
+        });
+
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof loadJadwal === 'function') {
+                loadJadwal();
+            }
+            if (typeof loadProfil === 'function') {
+                loadProfil();
+            } else {
+                alert("Fungsi loadProfil TIDAK DITEMUKAN! Ini berarti browser Anda masih menggunakan app.js versi lama (CACHE). Silakan tekan Ctrl+F5!");
+            }
+        });
+    </script>
+</body></html>
