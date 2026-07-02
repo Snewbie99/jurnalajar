@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manajemen Kelas - Jurnal Mengajar</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        
+        <div class="top-bar">
+            <a href="index.html" class="back-btn">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            </a>
+            <h1 id="class-title" style="margin: 0;">Kelas ...</h1>
+        </div>
+
+        <div class="glass-panel">
+            <div class="tabs">
+                <button class="tab-btn active" onclick="switchTab('absensi')">Absensi</button>
+                <button class="tab-btn" onclick="switchTab('jurnal')">Jurnal Pelajaran</button>
+                <button class="tab-btn" onclick="switchTab('nilai')">Penilaian</button>
+            </div>
+
+            <div id="loader-siswa" class="loader hidden" style="margin-bottom:20px;"></div>
+
+            <!-- TAB ABSENSI -->
+            <div id="tab-absensi" class="tab-content active">
+                <p style="margin-bottom: 15px; color: var(--text-muted);">Tandai absensi siswa untuk hari ini.</p>
+                <div id="student-list-absensi" class="student-list">
+                    <!-- Data siswa untuk absen akan dirender di sini -->
+                </div>
+                <button class="btn mt-4" onclick="submitAbsensi()" id="btn-submit-absen">Simpan Absensi</button>
+            </div>
+
+            <!-- TAB JURNAL -->
+            <div id="tab-jurnal" class="tab-content">
+                <form id="form-jurnal" onsubmit="event.preventDefault(); submitJurnal();">
+                    <div class="form-group">
+                        <label>Jam Ke</label>
+                        <input type="text" id="jurnal-jam" class="form-control" placeholder="Contoh: 1-2" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Materi / Tujuan Pembelajaran</label>
+                        <input type="text" id="jurnal-materi" class="form-control" placeholder="Materi hari ini" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Kegiatan Pembelajaran</label>
+                        <textarea id="jurnal-kegiatan" class="form-control" rows="3" placeholder="Teori, Praktikum, dll" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Asesmen (Opsional)</label>
+                        <input type="text" id="jurnal-asesmen" class="form-control" placeholder="Bentuk penilaian jika ada">
+                    </div>
+                    <div class="form-group">
+                        <label>Catatan (Opsional)</label>
+                        <textarea id="jurnal-catatan" class="form-control" rows="2" placeholder="Catatan khusus kegiatan belajar..."></textarea>
+                    </div>
+                    <button type="submit" class="btn mt-4" id="btn-submit-jurnal">Simpan Jurnal</button>
+                </form>
+            </div>
+
+            <!-- TAB NILAI -->
+            <div id="tab-nilai" class="tab-content">
+                <div class="form-group">
+                    <label>Nama Tugas / Asesmen</label>
+                    <input type="text" id="nilai-materi" class="form-control" placeholder="Contoh: Ulangan Harian 1, Tugas Praktik HTML">
+                </div>
+                <div id="student-list-nilai" class="student-list mt-4">
+                    <!-- Data siswa untuk nilai akan dirender di sini -->
+                </div>
+                <button class="btn mt-4" onclick="submitNilai()" id="btn-submit-nilai">Simpan Nilai</button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Toast Notification / Alert system bisa ditambahkan di sini -->
+
+    <script src="app.js"></script>
+    <script>
+        // Init script for kelas.html
+        document.addEventListener('DOMContentLoaded', () => {
+            initKelasPage();
+        });
+    </script>
+</body>
+</html>

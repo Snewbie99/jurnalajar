@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Guru - Jurnal Mengajar</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Jurnal Mengajar</h1>
+            <p>Manajemen Pembelajaran Informatika</p>
+        </header>
+
+        <div class="glass-panel profile-card">
+            <div class="avatar">
+                <!-- Inisial Guru -->
+                GI
+            </div>
+            <div class="profile-info">
+                <h2>Guru Informatika</h2>
+                <p>NIP: 198001012005011001</p>
+                <p>Tahun Ajaran 2025/2026 Semester 2</p>
+            </div>
+        </div>
+
+        <div class="glass-panel">
+            <h3 style="margin-bottom: 20px;">Jadwal Hari Ini</h3>
+            
+            <div id="loader-jadwal" class="loader hidden"></div>
+            <div id="error-jadwal" class="hidden" style="color: var(--danger); text-align: center;">Gagal memuat jadwal.</div>
+            
+            <div id="schedule-container" class="schedule-list">
+                <!-- Data jadwal akan dirender oleh JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Script konfigurasi dan logika -->
+    <script src="app.js"></script>
+    <script>
+        // Init script for index.html
+        document.addEventListener('DOMContentLoaded', () => {
+            loadJadwal();
+        });
+    </script>
+</body>
+</html>
