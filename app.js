@@ -424,9 +424,11 @@ async function submitNilai() {
 
 // Fitur Profil
 async function loadProfil() {
+    console.log("loadProfil() dipanggil!");
     try {
         const response = await fetch(`${GAS_URL}?action=getProfil&t=${new Date().getTime()}`);
         const result = await response.json();
+        console.log("Hasil profil:", result);
 
         if (result.status === "success" && result.data) {
             const profil = result.data;
