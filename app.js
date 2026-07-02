@@ -57,12 +57,12 @@ async function loadJadwal() {
             } else {
                 jadwalHariIni.forEach(item => {
                     const kelasEncoded = encodeURIComponent(item.Kelas);
-                    
+
                     // Format item.Jam e.g. "3 (09.10-09.45)"
                     let jamStr = item.Jam || "1 (08.00-08.35)";
                     let jamKeMatch = jamStr.match(/^(\d+)/);
                     let jamKe = jamKeMatch ? jamKeMatch[1] : "1";
-                    
+
                     let timeMatch = jamStr.match(/\(([\d\.]+)-/);
                     let hour = "08";
                     let min = "00";
@@ -72,7 +72,7 @@ async function loadJadwal() {
                         let h = parseInt(parts[0]);
                         ampm = h >= 12 ? "PM" : "AM";
                         let h12 = h > 12 ? h - 12 : h;
-                        if(h12 === 0) h12 = 12;
+                        if (h12 === 0) h12 = 12;
                         hour = h12.toString().padStart(2, '0');
                         min = parts[1] || "00";
                     }
@@ -116,11 +116,11 @@ async function loadJadwalMingguan() {
     if (GAS_URL === "YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE") return;
 
     try {
-        if(loader) loader.classList.remove('hidden');
+        if (loader) loader.classList.remove('hidden');
         const response = await fetch(`${GAS_URL}?action=getJadwal`);
         const result = await response.json();
 
-        if(loader) loader.classList.add('hidden');
+        if (loader) loader.classList.add('hidden');
 
         if (result.status === "success" && result.data.length > 0) {
             container.innerHTML = '';
@@ -138,32 +138,32 @@ async function loadJadwalMingguan() {
 
                 result.data.forEach((item) => {
                     const hari = item.Hari ? item.Hari.trim() : '';
-                    if(dayMap[hari] === undefined) return; 
+                    if (dayMap[hari] === undefined) return;
                     const dayIndex = dayMap[hari];
 
                     let startH = 8, startM = 0, endH = 9, endM = 0;
                     let match = (item.Jam || "").match(/\(([\d\.]+)-([\d\.]+)\)/);
-                    if(match) {
+                    if (match) {
                         let p1 = match[1].split('.');
                         let p2 = match[2].split('.');
-                        if(p1.length >= 2) { startH = parseInt(p1[0]); startM = parseInt(p1[1]); }
-                        if(p2.length >= 2) { endH = parseInt(p2[0]); endM = parseInt(p2[1]); }
+                        if (p1.length >= 2) { startH = parseInt(p1[0]); startM = parseInt(p1[1]); }
+                        if (p2.length >= 2) { endH = parseInt(p2[0]); endM = parseInt(p2[1]); }
                     }
-                    
+
                     let startTotalMins = (startH - 8) * 60 + startM;
                     let endTotalMins = (endH - 8) * 60 + endM;
                     let durationMins = endTotalMins - startTotalMins;
-                    if(durationMins <= 0) durationMins = 35; // fallback
-                    
-                    let topPx = startTotalMins * (80/60);
-                    let heightPx = durationMins * (80/60);
-                    
+                    if (durationMins <= 0) durationMins = 35; // fallback
+
+                    let topPx = startTotalMins * (80 / 60);
+                    let heightPx = durationMins * (80 / 60);
+
                     let leftStyle = `calc(80px + (100% - 80px) / 5 * ${dayIndex})`;
                     let widthStyle = `calc((100% - 80px) / 5)`;
-                    
+
                     const color = colors[dayIndex % colors.length];
                     const kelasEncoded = encodeURIComponent(item.Kelas);
-                    let timeStr = match ? `${match[1].replace('.',':')} - ${match[2].replace('.',':')}` : (item.Jam || '');
+                    let timeStr = match ? `${match[1].replace('.', ':')} - ${match[2].replace('.', ':')}` : (item.Jam || '');
 
                     const html = `
                     <div class="absolute p-1 z-10 pointer-events-auto" style="left: ${leftStyle}; top: ${topPx}px; width: ${widthStyle}; height: ${heightPx}px;">
@@ -425,9 +425,9 @@ async function submitNilai() {
 // Fitur Profil
 async function loadProfil() {
     try {
-        const response = await fetch(`${GAS_URL}?action=getProfil`);
+        const response = await fetch(`${GAS_URL}?action=getProfil&t=${new Date().getTime()}`);
         const result = await response.json();
-        
+
         if (result.status === "success" && result.data) {
             const profil = result.data;
             const namaGuru = profil['Nama Guru'] || profil['Nama'];
