@@ -1,75 +1,262 @@
 <!DOCTYPE html>
-<html lang="id">
+<html class="light" lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daftar Siswa - Jurnal Mengajar</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Daftar Siswa - Jurnal Mengajar</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9ff;
+        }
+        .sidebar-active {
+            background-color: #6cf8bb;
+            color: #002113;
+            border-radius: 9999px;
+            font-weight: 700;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(8px);
+            border: 1px solid #e2e8f0;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "primary": "#004ac6",
+                      "on-primary": "#ffffff",
+                      "primary-fixed": "#dbe1ff",
+                      "secondary": "#006c49",
+                      "on-secondary": "#ffffff",
+                      "secondary-fixed": "#6ffbbe",
+                      "secondary-container": "#6cf8bb",
+                      "on-secondary-container": "#00714d",
+                      "on-secondary-fixed": "#002113",
+                      "tertiary": "#525657",
+                      "background": "#f8f9ff",
+                      "surface": "#f8f9ff",
+                      "surface-container-low": "#eff4ff",
+                      "on-surface": "#0d1c2e",
+                      "on-surface-variant": "#434655",
+                      "outline-variant": "#c3c6d7",
+                      "danger": "#ba1a1a"
+              },
+              "fontFamily": {
+                      "headline-md": ["Manrope"],
+                      "body-md": ["Inter"],
+                      "label-sm": ["Inter"],
+                      "label-md": ["Inter"],
+                      "display-lg": ["Manrope"],
+                      "body-lg": ["Inter"],
+                      "body-sm": ["Inter"]
+              }
+            }
+          }
+        }
+    </script>
 </head>
-<body>
-    <div class="container">
-        <div class="top-bar">
-            <a href="index.html" class="back-btn">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-            </a>
-            <h1 style="margin: 0;">Daftar Siswa</h1>
+<body class="flex min-h-screen bg-background">
+<!-- NavigationDrawer (Persistent Sidebar for Desktop) -->
+<aside class="hidden md:flex flex-col h-full w-[280px] fixed left-0 top-0 z-40 bg-surface-container-low border-r border-outline-variant py-8 transition-all duration-200">
+<div class="px-6 mb-8 flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined">school</span>
+</div>
+<h1 class="font-headline-md text-2xl font-bold text-primary">Jurnal Mengajar</h1>
+</div>
+<!-- Profile Header -->
+<div class="flex flex-col items-start px-6 mb-8">
+<img id="foto-profil-sidebar" class="w-12 h-12 rounded-full mb-3 object-cover border-2 border-primary-fixed" data-alt="Profil Guru" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDWsZONDKHPCjR5qhw7gl2rzf3Pg0QotMOW83tUbeJmftb07Sfqk5oncZdli1lEpRKAYRaae8XiyjRIPJ0UeYdjUIPFDBMXd1H32-gKpt0O2C0LnRz8Ia0hO5RO8IA3TQQ6uHpEFdeVV-cl6iYw32xUYGMjfuYI4HzWhaQCqAFm8gJ4ZRI39kovknypxRmdG7poCZSbOwJC-BsOFKwQprtKhfwuuALht0FLAX3zMjTxadqgc_kv47cuVerGwchLqO4p9TCBv6Ko1Ag"/>
+<p id="nama-guru-sidebar" class="font-headline-md text-lg text-primary font-bold">Guru Informatika</p>
+<p id="tahun-ajaran-sidebar" class="font-body-sm text-on-surface-variant">Tahun Ajaran 2025/2026</p>
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-fixed text-sm mt-2 font-bold">Sesi Aktif</span>
+</div>
+<nav class="flex flex-col gap-1">
+<!-- Dashboard -->
+<a class="text-on-surface-variant hover:bg-surface-variant mx-2 px-4 py-3 flex items-center gap-3 cursor-pointer transition-all duration-200" href="index.html">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-body-md">Dashboard Utama</span>
+</a>
+<!-- Students (Active) -->
+<a class="bg-secondary-container text-on-secondary-container rounded-full mx-2 px-4 py-3 font-bold flex items-center gap-3 cursor-pointer transition-all duration-200" href="daftar-siswa.html">
+<span class="material-symbols-outlined">group</span>
+<span class="font-body-md">Daftar Siswa</span>
+</a>
+<!-- Attendance Recap -->
+<a class="text-on-surface-variant hover:bg-surface-variant mx-2 px-4 py-3 flex items-center gap-3 cursor-pointer transition-all duration-200" href="rekap-absensi.html">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-body-md">Rekap Absensi</span>
+</a>
+<!-- Weekly Schedule -->
+<a class="text-on-surface-variant hover:bg-surface-variant mx-2 px-4 py-3 flex items-center gap-3 cursor-pointer transition-all duration-200" href="jadwal-mingguan.html">
+<span class="material-symbols-outlined">calendar_today</span>
+<span class="font-body-md">Jadwal Mingguan</span>
+</a>
+</nav>
+</aside>
+
+<!-- Main Content Area -->
+<main class="flex-1 md:ml-[280px] pb-24 md:pb-8">
+    <div class="px-4 md:px-6 py-8 max-w-7xl mx-auto">
+        
+        <!-- Header Section -->
+        <section class="mb-8">
+            <h3 class="font-display-lg text-3xl md:text-4xl text-on-surface font-bold">Daftar Siswa</h3>
+            <p class="font-body-lg text-tertiary mt-2">Cari dan lihat daftar siswa per kelas.</p>
+        </section>
+
+        <!-- Search Bar -->
+        <div class="glass-card rounded-xl p-6 mb-8 flex flex-col md:flex-row gap-4 items-center shadow-sm">
+            <div class="relative w-full md:w-2/3">
+                <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-tertiary">search</span>
+                <input type="text" id="input-kelas" class="w-full pl-12 pr-4 py-3 rounded-lg border border-outline-variant bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all" placeholder="Masukkan nama kelas (contoh: 7 A, 9 D)">
+            </div>
+            <button onclick="loadDaftarSiswaPage()" class="w-full md:w-auto px-8 py-3 bg-primary text-on-primary rounded-lg font-bold hover:bg-blue-700 transition-colors shadow-md flex justify-center items-center gap-2">
+                Cari Kelas
+            </button>
         </div>
 
-        <div class="glass-panel">
-            <div class="form-group" style="display: flex; gap: 10px;">
-                <input type="text" id="input-kelas" class="form-control" placeholder="Masukkan nama kelas (misal: 7 A)">
-                <button class="btn" style="width: auto;" onclick="loadDaftarSiswaPage()">Cari</button>
-            </div>
+        <!-- Loader -->
+        <div id="loader-daftar" class="hidden flex justify-center items-center py-12">
+            <span class="material-symbols-outlined animate-spin text-4xl text-primary">autorenew</span>
+        </div>
 
-            <div id="loader-daftar" class="loader hidden" style="margin-bottom:20px;"></div>
-            
-            <div id="daftar-siswa-container" class="student-list mt-4">
-                <p style="text-align: center; color: var(--text-muted);">Masukkan kelas untuk melihat daftar siswa.</p>
+        <!-- Student Grid -->
+        <div id="daftar-siswa-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="col-span-full text-center py-12 bg-white rounded-xl border border-dashed border-outline-variant">
+                <span class="material-symbols-outlined text-5xl text-tertiary mb-2">person_search</span>
+                <p class="text-tertiary">Silakan masukkan kelas untuk melihat daftar siswa.</p>
             </div>
         </div>
     </div>
+</main>
 
-    <!-- Script konfigurasi dan logika -->
-    <script src="app.js"></script>
-    <script>
-        async function loadDaftarSiswaPage() {
-            const kelas = document.getElementById('input-kelas').value.trim();
-            if(!kelas) { alert("Masukkan nama kelas!"); return; }
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full flex justify-around items-center px-4 bg-surface border-t border-outline-variant h-20 z-50">
+<a class="flex flex-col items-center justify-center text-on-surface-variant active:scale-95 transition-transform duration-150" href="index.html">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-sm text-xs mt-1">Dashboard</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary font-bold active:scale-95 transition-transform duration-150" href="daftar-siswa.html">
+<span class="material-symbols-outlined">group</span>
+<span class="font-label-sm text-xs mt-1">Siswa</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant active:scale-95 transition-transform duration-150" href="rekap-absensi.html">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-sm text-xs mt-1">Rekap</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant active:scale-95 transition-transform duration-150" href="jadwal-mingguan.html">
+<span class="material-symbols-outlined">calendar_today</span>
+<span class="font-label-sm text-xs mt-1">Jadwal</span>
+</a>
+</nav>
 
-            const loader = document.getElementById('loader-daftar');
-            const container = document.getElementById('daftar-siswa-container');
+<!-- Scripts -->
+<script src="app.js"></script>
+<script>
+    async function loadDaftarSiswaPage() {
+        const kelas = document.getElementById('input-kelas').value.trim();
+        if(!kelas) { alert("Masukkan nama kelas!"); return; }
+
+        const loader = document.getElementById('loader-daftar');
+        const container = document.getElementById('daftar-siswa-container');
+        
+        if(GAS_URL === "YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE") return;
+
+        try {
+            loader.classList.remove('hidden');
+            container.innerHTML = '';
             
-            if(GAS_URL === "YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE") return;
+            const response = await fetch(`${GAS_URL}?action=getSiswa&kelas=${encodeURIComponent(kelas)}`);
+            const result = await response.json();
+            
+            loader.classList.add('hidden');
 
-            try {
-                loader.classList.remove('hidden');
-                container.innerHTML = '';
-                
-                const response = await fetch(`${GAS_URL}?action=getSiswa&kelas=${encodeURIComponent(kelas)}`);
-                const result = await response.json();
-                
-                loader.classList.add('hidden');
+            if (result.status === "success" && result.data.length > 0) {
+                // Background colors for avatars
+                const avatarColors = [
+                    'bg-red-100 text-red-700', 
+                    'bg-orange-100 text-orange-700',
+                    'bg-amber-100 text-amber-700',
+                    'bg-green-100 text-green-700',
+                    'bg-emerald-100 text-emerald-700',
+                    'bg-teal-100 text-teal-700',
+                    'bg-cyan-100 text-cyan-700',
+                    'bg-blue-100 text-blue-700',
+                    'bg-indigo-100 text-indigo-700',
+                    'bg-violet-100 text-violet-700',
+                    'bg-purple-100 text-purple-700',
+                    'bg-fuchsia-100 text-fuchsia-700',
+                    'bg-pink-100 text-pink-700',
+                    'bg-rose-100 text-rose-700'
+                ];
 
-                if (result.status === "success" && result.data.length > 0) {
-                    result.data.forEach(siswa => {
-                        const html = `
-                            <div class="student-item" style="justify-content: flex-start; gap: 15px;">
-                                <div style="background: rgba(255,255,255,0.1); width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: bold;">
-                                    ${siswa.no}
-                                </div>
-                                <div class="student-name">${siswa.nama}</div>
+                result.data.forEach(siswa => {
+                    // Extract initials (up to 2 characters)
+                    let initials = "";
+                    if(siswa.nama) {
+                        const words = siswa.nama.split(" ").filter(w => w.length > 0);
+                        initials += words[0][0];
+                        if(words.length > 1) {
+                            initials += words[1][0];
+                        }
+                    }
+                    initials = initials.toUpperCase();
+                    
+                    const colorClass = avatarColors[(siswa.no - 1) % avatarColors.length];
+
+                    const html = `
+                        <div class="glass-card rounded-xl p-4 flex items-center gap-4 hover:shadow-md transition-all duration-300 hover:-translate-y-1">
+                            <div class="w-14 h-14 rounded-full flex items-center justify-center font-bold text-lg ${colorClass} shrink-0 shadow-sm border border-white">
+                                ${initials}
                             </div>
-                        `;
-                        container.insertAdjacentHTML('beforeend', html);
-                    });
-                } else {
-                    container.innerHTML = `<p style="color:var(--danger); text-align:center;">Kelas tidak ditemukan atau kosong.</p>`;
-                }
-            } catch (error) {
-                loader.classList.add('hidden');
-                container.innerHTML = `<p style="color:var(--danger); text-align:center;">Gagal memuat data.</p>`;
+                            <div class="overflow-hidden">
+                                <h4 class="font-headline-md text-base md:text-lg text-on-surface font-semibold truncate" title="${siswa.nama}">${siswa.nama}</h4>
+                                <p class="font-body-sm text-tertiary mt-0.5">No. Absen: ${siswa.no}</p>
+                            </div>
+                        </div>
+                    `;
+                    container.insertAdjacentHTML('beforeend', html);
+                });
+            } else {
+                container.innerHTML = `
+                <div class="col-span-full text-center py-12 bg-white rounded-xl border border-dashed border-red-300">
+                    <span class="material-symbols-outlined text-5xl text-red-400 mb-2">error</span>
+                    <p class="text-red-500 font-medium">Kelas tidak ditemukan atau daftar siswa kosong.</p>
+                </div>`;
             }
+        } catch (error) {
+            loader.classList.add('hidden');
+            container.innerHTML = `
+            <div class="col-span-full text-center py-12 bg-white rounded-xl border border-dashed border-red-300">
+                <span class="material-symbols-outlined text-5xl text-red-400 mb-2">wifi_off</span>
+                <p class="text-red-500 font-medium">Gagal memuat data dari server. Periksa koneksi Anda.</p>
+            </div>`;
         }
-    </script>
+    }
+
+    // Input form submit on enter
+    document.getElementById('input-kelas').addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+            loadDaftarSiswaPage();
+        }
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+        if (typeof loadProfil === 'function') {
+            loadProfil();
+        }
+    });
+</script>
 </body>
 </html>
