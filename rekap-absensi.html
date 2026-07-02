@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rekap Absensi - Jurnal Mengajar</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .table-rekap {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .table-rekap th, .table-rekap td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid var(--glass-border);
+        }
+        .table-rekap th {
+            color: #818cf8;
+            font-weight: 600;
+        }
+        .table-rekap tr:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="top-bar">
+            <a href="index.html" class="back-btn">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            </a>
+            <h1 style="margin: 0;">Rekap Absensi</h1>
+        </div>
+
+        <div class="glass-panel" style="overflow-x: auto;">
+            <div id="loader-rekap" class="loader hidden" style="margin-bottom:20px;"></div>
+            
+            <table class="table-rekap" id="tabel-rekap">
+                <thead>
+                    <tr>
+                        <th>Tanggal</th>
+                        <th>Kelas</th>
+                        <th>Nama Siswa</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="rekap-body">
+                    <tr><td colspan="4" style="text-align:center; color: var(--text-muted);">Memuat data...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const loader = document.getElementById('loader-rekap');
+            const tbody = document.getElementById('rekap-body');
+            
+            if(GAS_URL === "YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE") {
+                tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color: var(--danger);">GAS_URL belum di-setting</td></tr>`;
+                return;
+            }
+
+            try {
+                loader.classList.remove('hidden');
+                
+                const response = await fetch(`${GAS_URL}?action=getRekapAbsen`);
+                const result = await response.json();
+                
+                loader.classList.add('hidden');
+
+                if (result.status === "success") {
+                    tbody.innerHTML = '';
+                    if (result.data.length === 0) {
+                        tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color: var(--text-muted);">Belum ada data absensi.</td></tr>`;
+                        return;
+                    }
+                    
+                    // Menampilkan 50 data terakhir agar tidak terlalu berat (jika data sangat banyak)
+                    const dataToShow = result.data.slice(-50).reverse();
+                    
+                    dataToShow.forEach(row => {
+                        let statusColor = "";
+                        if(row.Status === "Hadir" || row.Status === "H") statusColor = "color: var(--success)";
+                        else if(row.Status === "Sakit" || row.Status === "S") statusColor = "color: var(--warning)";
+                        else if(row.Status === "Izin" || row.Status === "I") statusColor = "color: #818cf8";
+                        else if(row.Status === "Alpa" || row.Status === "A") statusColor = "color: var(--danger)";
+
+                        // Parsing dan memformat tanggal Google Sheets jika diperlukan
+                        let tgl = row.Tanggal;
+                        if(typeof tgl === 'string' && tgl.includes('T')) tgl = tgl.split('T')[0];
+                        
+                        const html = `
+                            <tr>
+                                <td>${tgl}</td>
+                                <td>${row.Kelas}</td>
+                                <td>${row["Nama Siswa"]}</td>
+                                <td style="${statusColor}; font-weight: bold;">${row.Status}</td>
+                            </tr>
+                        `;
+                        tbody.insertAdjacentHTML('beforeend', html);
+                    });
+                } else {
+                    tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color: var(--danger);">${result.message}</td></tr>`;
+                }
+            } catch (error) {
+                loader.classList.add('hidden');
+                tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color: var(--danger);">Gagal mengambil koneksi.</td></tr>`;
+            }
+        });
+    </script>
+</body>
+</html>

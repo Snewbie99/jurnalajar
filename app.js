@@ -45,32 +45,91 @@ async function loadJadwal() {
         if (result.status === "success" && result.data.length > 0) {
             container.innerHTML = ''; // bersihkan
 
-            result.data.forEach(item => {
-                // Encode nama kelas untuk URL
-                const kelasEncoded = encodeURIComponent(item.Kelas);
+            // Dapatkan hari ini dalam bahasa Indonesia
+            const namaHari = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
+            const hariIni = namaHari[new Date().getDay()];
 
-                const html = `
-                    <a href="kelas.html?kelas=${kelasEncoded}" class="schedule-item">
-                        <div>
-                            <div class="schedule-time">${item.Jam || ''} | ${item.Hari || ''}</div>
-                            <div class="schedule-class">${item.Kelas || 'Kelas'}</div>
-                            <div class="schedule-subject">${item.Materi || 'Informatika'}</div>
-                        </div>
-                        <div class="schedule-action">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                        </div>
-                    </a>
-                `;
-                container.insertAdjacentHTML('beforeend', html);
-            });
+            // Filter jadwal hanya hari ini
+            const jadwalHariIni = result.data.filter(item => item.Hari === hariIni);
+
+            if (jadwalHariIni.length === 0) {
+                container.innerHTML = `<p style="text-align:center; color: var(--text-muted);">Tidak ada jadwal mengajar pada hari ${hariIni}.</p>`;
+            } else {
+                jadwalHariIni.forEach(item => {
+                    const kelasEncoded = encodeURIComponent(item.Kelas);
+                    const html = `
+                        <a href="kelas.html?kelas=${kelasEncoded}" class="schedule-item">
+                            <div>
+                                <div class="schedule-time">${item.Jam || ''}</div>
+                                <div class="schedule-class">${item.Kelas || 'Kelas'}</div>
+                                <div class="schedule-subject">${item.Materi || 'Informatika'}</div>
+                            </div>
+                            <div class="schedule-action">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            </div>
+                        </a>
+                    `;
+                    container.insertAdjacentHTML('beforeend', html);
+                });
+            }
         } else {
-            container.innerHTML = `<p style="text-align:center; color: var(--text-muted);">Tidak ada jadwal hari ini.</p>`;
+            container.innerHTML = `<p style="text-align:center; color: var(--text-muted);">Jadwal kosong.</p>`;
         }
-
     } catch (error) {
         console.error("Gagal memuat jadwal:", error);
         loader.classList.add('hidden');
         errorMsg.classList.remove('hidden');
+    }
+}
+
+async function loadJadwalMingguan() {
+    const loader = document.getElementById('loader-jadwal');
+    const container = document.getElementById('schedule-container');
+
+    if(!container) return; 
+
+    if (GAS_URL === "YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE") return;
+
+    try {
+        loader.classList.remove('hidden');
+        const response = await fetch(`${GAS_URL}?action=getJadwal`);
+        const result = await response.json();
+        
+        loader.classList.add('hidden');
+
+        if (result.status === "success" && result.data.length > 0) {
+            container.innerHTML = ''; 
+
+            const grouped = {};
+            result.data.forEach(item => {
+                const hari = item.Hari || 'Lainnya';
+                if(!grouped[hari]) grouped[hari] = [];
+                grouped[hari].push(item);
+            });
+
+            for (const hari in grouped) {
+                const htmlHeader = `<h4 style="margin: 15px 0 10px 0; color: #818cf8; border-bottom: 1px solid var(--glass-border); padding-bottom: 5px;">${hari}</h4>`;
+                container.insertAdjacentHTML('beforeend', htmlHeader);
+
+                grouped[hari].forEach(item => {
+                    const kelasEncoded = encodeURIComponent(item.Kelas);
+                    const html = `
+                        <a href="kelas.html?kelas=${kelasEncoded}" class="schedule-item">
+                            <div>
+                                <div class="schedule-time">${item.Jam || ''}</div>
+                                <div class="schedule-class">${item.Kelas || 'Kelas'}</div>
+                                <div class="schedule-subject">${item.Materi || 'Informatika'}</div>
+                            </div>
+                        </a>
+                    `;
+                    container.insertAdjacentHTML('beforeend', html);
+                });
+            }
+        } else {
+            container.innerHTML = `<p style="text-align:center; color: var(--text-muted);">Tidak ada jadwal.</p>`;
+        }
+    } catch(err) {
+        console.error(err);
     }
 }
 

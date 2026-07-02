@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Siswa - Jurnal Mengajar</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="top-bar">
+            <a href="index.html" class="back-btn">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            </a>
+            <h1 style="margin: 0;">Daftar Siswa</h1>
+        </div>
+
+        <div class="glass-panel">
+            <div class="form-group" style="display: flex; gap: 10px;">
+                <input type="text" id="input-kelas" class="form-control" placeholder="Masukkan nama kelas (misal: 7 A)">
+                <button class="btn" style="width: auto;" onclick="loadDaftarSiswaPage()">Cari</button>
+            </div>
+
+            <div id="loader-daftar" class="loader hidden" style="margin-bottom:20px;"></div>
+            
+            <div id="daftar-siswa-container" class="student-list mt-4">
+                <p style="text-align: center; color: var(--text-muted);">Masukkan kelas untuk melihat daftar siswa.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script konfigurasi dan logika -->
+    <script src="app.js"></script>
+    <script>
+        async function loadDaftarSiswaPage() {
+            const kelas = document.getElementById('input-kelas').value.trim();
+            if(!kelas) { alert("Masukkan nama kelas!"); return; }
+
+            const loader = document.getElementById('loader-daftar');
+            const container = document.getElementById('daftar-siswa-container');
+            
+            if(GAS_URL === "YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE") return;
+
+            try {
+                loader.classList.remove('hidden');
+                container.innerHTML = '';
+                
+                const response = await fetch(`${GAS_URL}?action=getSiswa&kelas=${encodeURIComponent(kelas)}`);
+                const result = await response.json();
+                
+                loader.classList.add('hidden');
+
+                if (result.status === "success" && result.data.length > 0) {
+                    result.data.forEach(siswa => {
+                        const html = `
+                            <div class="student-item" style="justify-content: flex-start; gap: 15px;">
+                                <div style="background: rgba(255,255,255,0.1); width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: bold;">
+                                    ${siswa.no}
+                                </div>
+                                <div class="student-name">${siswa.nama}</div>
+                            </div>
+                        `;
+                        container.insertAdjacentHTML('beforeend', html);
+                    });
+                } else {
+                    container.innerHTML = `<p style="color:var(--danger); text-align:center;">Kelas tidak ditemukan atau kosong.</p>`;
+                }
+            } catch (error) {
+                loader.classList.add('hidden');
+                container.innerHTML = `<p style="color:var(--danger); text-align:center;">Gagal memuat data.</p>`;
+            }
+        }
+    </script>
+</body>
+</html>
