@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html class="light" lang="en">
 <head>
-    <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>Jurnal Mengajar - Teacher Dashboard</title>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-    <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Classroom Clarity - Teacher Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
@@ -31,22 +31,8 @@
             backdrop-filter: blur(8px);
             border: 1px solid #e2e8f0;
         }
-        .loader {
-            border: 3px solid rgba(0,0,0,0.1);
-            border-top: 3px solid var(--primary, #004ac6);
-            border-radius: 50%;
-            width: 24px;
-            height: 24px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        .hidden { display: none !important; }
     </style>
-    <script id="tailwind-config">
+<script id="tailwind-config">
         tailwind.config = {
           darkMode: "class",
           theme: {
@@ -126,6 +112,17 @@
                       "body-sm": ["Inter"],
                       "headline-lg": ["Manrope"],
                       "headline-lg-mobile": ["Manrope"]
+              },
+              "fontSize": {
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                      "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                      "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                      "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}]
               }
             },
           },
@@ -135,138 +132,250 @@
 <body class="flex min-h-screen bg-background">
 <!-- NavigationDrawer (Persistent Sidebar for Desktop) -->
 <aside class="hidden md:flex flex-col h-full w-[280px] fixed left-0 top-0 z-40 bg-surface-container-low border-r border-outline-variant py-stack-lg transition-all duration-200">
-    <div class="px-6 mb-8 flex items-center gap-3">
-        <div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-on-primary">
-            <span class="material-symbols-outlined">school</span>
-        </div>
-        <h1 class="font-headline-md text-2xl font-bold text-primary">Jurnal Mengajar</h1>
-    </div>
-    
-    <!-- Profile Header -->
-    <div class="flex flex-col items-start px-6 mb-8">
-        <div class="w-12 h-12 rounded-full mb-3 bg-primary text-white flex items-center justify-center text-xl font-bold border-2 border-primary-fixed">GI</div>
-        <p class="font-headline-md text-xl text-primary font-bold">Guru Informatika</p>
-        <p class="font-body-sm text-on-surface-variant">Thn Ajaran 2025/2026</p>
-    </div>
-    
-    <nav class="flex flex-col gap-1">
-        <a class="bg-secondary-container text-on-secondary-container rounded-full mx-2 px-4 py-3 font-bold flex items-center gap-3 cursor-pointer transition-all duration-200" href="index.html">
-            <span class="material-symbols-outlined">dashboard</span>
-            <span class="font-body-md">Dashboard Utama</span>
-        </a>
-        <a class="text-on-surface-variant hover:bg-surface-variant mx-2 px-4 py-3 flex items-center gap-3 cursor-pointer transition-all duration-200" href="jadwal-mingguan.html">
-            <span class="material-symbols-outlined">calendar_month</span>
-            <span class="font-body-md">Jadwal 1 Minggu</span>
-        </a>
-        <a class="text-on-surface-variant hover:bg-surface-variant mx-2 px-4 py-3 flex items-center gap-3 cursor-pointer transition-all duration-200" href="daftar-siswa.html">
-            <span class="material-symbols-outlined">group</span>
-            <span class="font-body-md">Daftar Siswa</span>
-        </a>
-        <a class="text-on-surface-variant hover:bg-surface-variant mx-2 px-4 py-3 flex items-center gap-3 cursor-pointer transition-all duration-200" href="rekap-absensi.html">
-            <span class="material-symbols-outlined">analytics</span>
-            <span class="font-body-md">Rekap Absensi</span>
-        </a>
-    </nav>
+<div class="px-6 mb-8 flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined">school</span>
+</div>
+<h1 class="font-headline-md text-headline-md font-bold text-primary">Clarity</h1>
+</div>
+<!-- Profile Header -->
+<div class="flex flex-col items-start px-6 mb-8">
+<img class="w-12 h-12 rounded-full mb-3 object-cover border-2 border-primary-fixed" data-alt="Teacher Profile" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDWsZONDKHPCjR5qhw7gl2rzf3Pg0QotMOW83tUbeJmftb07Sfqk5oncZdli1lEpRKAYRaae8XiyjRIPJ0UeYdjUIPFDBMXd1H32-gKpt0O2C0LnRz8Ia0hO5RO8IA3TQQ6uHpEFdeVV-cl6iYw32xUYGMjfuYI4HzWhaQCqAFm8gJ4ZRI39kovknypxRmdG7poCZSbOwJC-BsOFKwQprtKhfwuuALht0FLAX3zMjTxadqgc_kv47cuVerGwchLqO4p9TCBv6Ko1Ag"/>
+<p class="font-headline-md text-headline-md text-primary font-bold">Mx. Henderson</p>
+<p class="font-body-sm text-on-surface-variant">Grade 4 - Room 102</p>
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-fixed text-label-sm mt-2">Active Session</span>
+</div>
+<nav class="flex flex-col gap-1">
+<a class="bg-secondary-container text-on-secondary-container rounded-full mx-2 px-4 py-3 font-bold flex items-center gap-3 cursor-pointer transition-all duration-200" href="index.html">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-body-md text-body-md">Dashboard</span>
+</a>
+<a class="text-on-surface-variant hover:bg-surface-variant mx-2 px-4 py-3 flex items-center gap-3 cursor-pointer transition-all duration-200" href="jadwal-mingguan.html">
+<span class="material-symbols-outlined">calendar_today</span>
+<span class="font-body-md text-body-md">Weekly Schedule</span>
+</a>
+<a class="text-on-surface-variant hover:bg-surface-variant mx-2 px-4 py-3 flex items-center gap-3 cursor-pointer transition-all duration-200" href="daftar-siswa.html">
+<span class="material-symbols-outlined">group</span>
+<span class="font-body-md text-body-md">Students</span>
+</a>
+<a class="text-on-surface-variant hover:bg-surface-variant mx-2 px-4 py-3 flex items-center gap-3 cursor-pointer transition-all duration-200" href="rekap-absensi.html">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-body-md text-body-md">Attendance Recap</span>
+</a>
+</nav>
 </aside>
-
 <!-- Main Content Area -->
 <main class="flex-1 md:ml-[280px] pb-24 md:pb-8">
-    <!-- TopAppBar -->
-    <header class="w-full top-0 sticky z-30 bg-surface border-b border-outline-variant h-16 flex justify-between items-center px-container-padding-sm md:px-container-padding-md">
-        <div class="flex items-center gap-4">
-            <div class="md:hidden w-8 h-8 rounded-full bg-primary-fixed flex items-center justify-center text-primary">
-                <span class="material-symbols-outlined">menu</span>
-            </div>
-            <h2 class="font-headline-md text-xl font-bold text-primary">Dashboard</h2>
-        </div>
-        <div class="flex items-center gap-4">
-            <div class="hidden sm:flex flex-col items-end mr-2">
-                <span class="font-label-md text-on-surface font-bold" id="current-date">Today</span>
-            </div>
-            <button class="w-10 h-10 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-surface-container-low transition-colors">
-                <span class="material-symbols-outlined">settings</span>
-            </button>
-        </div>
-    </header>
-
-    <!-- Page Content -->
-    <div class="px-container-padding-sm md:px-container-padding-md py-stack-lg max-w-7xl mx-auto">
-        
-        <!-- Greeting & Summary -->
-        <section class="mb-stack-lg">
-            <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
-                <div>
-                    <h3 class="font-display-lg text-4xl text-on-surface font-bold">Selamat Mengajar!</h3>
-                    <p class="font-body-lg text-lg text-tertiary mt-2">Pilih jadwal di bawah untuk memulai jurnal atau absen.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Bento Grid Layout -->
-        <div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
-            
-            <!-- Upcoming Schedule (Vertical) -->
-            <div class="md:col-span-4 glass-card rounded-xl p-6 h-full border border-outline-variant bg-white">
-                <h4 class="font-headline-md text-2xl text-on-surface mb-6 font-bold">Jadwal Hari Ini</h4>
-                
-                <div id="loader-jadwal" class="loader hidden" style="margin: 20px auto;"></div>
-                <div id="error-jadwal" class="hidden text-center text-error mb-4">Gagal memuat jadwal.</div>
-
-                <div class="space-y-4" id="schedule-container">
-                    <!-- Data jadwal akan dirender oleh JavaScript dari GAS -->
-                    <p class="text-tertiary text-center text-sm">Loading...</p>
-                </div>
-
-                <a href="jadwal-mingguan.html" class="w-full mt-6 py-2 border border-primary text-primary rounded-lg font-label-md hover:bg-surface-container-low transition-colors flex justify-center items-center font-semibold text-sm">
-                    Lihat Semua Jadwal
-                </a>
-            </div>
-            
-            <!-- Quick Actions / Visual Placeholder -->
-            <div class="md:col-span-8 flex flex-col gap-gutter">
-                <div class="glass-card rounded-xl overflow-hidden h-full relative group min-h-[300px]">
-                    <div class="w-full h-full min-h-[300px] bg-cover bg-center transition-transform duration-700 group-hover:scale-110" style="background-image: url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80')"></div>
-                    <div class="absolute inset-0 bg-gradient-to-t from-on-background/90 to-transparent flex items-end p-6">
-                        <div>
-                            <p class="text-white font-label-sm uppercase tracking-widest opacity-80 mb-1">Inspirasi Pagi</p>
-                            <h5 class="text-white text-2xl font-bold font-headline-md leading-tight">"Teknologi hanyalah alat. Dalam hal membuat anak-anak bekerja sama dan memotivasi mereka, guru adalah yang paling penting." - Bill Gates</h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+<!-- TopAppBar -->
+<header class="w-full top-0 sticky z-30 bg-surface border-b border-outline-variant h-16 flex justify-between items-center px-container-padding-sm md:px-container-padding-md">
+<div class="flex items-center gap-4">
+<div class="md:hidden w-8 h-8 rounded-full bg-primary-fixed flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">menu</span>
+</div>
+<h2 class="font-headline-md text-headline-md font-bold text-primary">Classroom Clarity</h2>
+</div>
+<div class="flex items-center gap-4">
+<div class="hidden sm:flex flex-col items-end mr-2">
+<span class="font-label-md text-on-surface font-bold">Today</span>
+</div>
+<button class="w-10 h-10 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</div>
+</header>
+<!-- Page Content -->
+<div class="px-container-padding-sm md:px-container-padding-md py-stack-lg max-w-7xl mx-auto">
+<!-- Greeting & Summary -->
+<section class="mb-stack-lg">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<h3 class="font-display-lg text-display-lg text-on-surface">Good morning, Mx. Henderson</h3>
+<p class="font-body-lg text-body-lg text-tertiary mt-2">Welcome to your teacher dashboard.</p>
+</div>
+<button class="h-[44px] px-6 bg-primary text-on-primary rounded-lg font-label-md hover:opacity-90 transition-opacity flex items-center gap-2">
+<span class="material-symbols-outlined">add</span>
+                        Start Morning Roll Call
+                    </button>
+</div>
+</section>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- Attendance Summary Card (Large) -->
+<div class="md:col-span-8 glass-card rounded-xl p-6 flex flex-col justify-between">
+<div class="flex justify-between items-start mb-6">
+<div>
+<h4 class="font-headline-md text-headline-md text-on-surface">Attendance Overview</h4>
+<p class="font-body-sm text-tertiary">Live data for Grade 4 - Room 102</p>
+</div>
+<span class="bg-secondary-fixed text-on-secondary-fixed px-3 py-1 rounded-full text-label-sm">94% Present</span>
+</div>
+<div class="flex flex-wrap items-center gap-8 py-4">
+<div class="flex items-center gap-4">
+<div class="w-16 h-16 rounded-full border-4 border-secondary flex items-center justify-center">
+<span class="font-headline-md text-secondary">24</span>
+</div>
+<div>
+<p class="font-label-md text-on-surface">Present</p>
+<p class="font-body-sm text-tertiary">On time &amp; active</p>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="w-16 h-16 rounded-full border-4 border-error flex items-center justify-center">
+<span class="font-headline-md text-error">2</span>
+</div>
+<div>
+<p class="font-label-md text-on-surface">Absent</p>
+<p class="font-body-sm text-tertiary">Excused: 1</p>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="w-16 h-16 rounded-full border-4 border-surface-dim flex items-center justify-center">
+<span class="font-headline-md text-tertiary">1</span>
+</div>
+<div>
+<p class="font-label-md text-on-surface">Late</p>
+<p class="font-body-sm text-tertiary">Expected 08:45</p>
+</div>
+</div>
+</div>
+<div class="mt-4 pt-4 border-t border-outline-variant flex justify-end">
+<a href="rekap-absensi.html" class="text-primary font-label-md flex items-center gap-1 hover:underline">
+                            View Roster <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+</div>
+</div>
+<!-- Upcoming Schedule (Vertical) -->
+<div class="md:col-span-4 glass-card rounded-xl p-6 flex flex-col">
+<h4 class="font-headline-md text-headline-md text-on-surface mb-6">Today's Schedule</h4>
+<div id="loader-jadwal" class="loader hidden" style="border: 3px solid rgba(0,0,0,0.1); border-top: 3px solid #004ac6; border-radius: 50%; width: 24px; height: 24px; animation: spin 1s linear infinite; margin: 0 auto;"></div>
+<div id="schedule-container" class="space-y-4 flex-1">
+<!-- Jadwal akan dimasukkan via JS disini -->
+<div class="flex gap-4 p-3 rounded-lg bg-surface-container hover:bg-surface-container-high transition-colors cursor-pointer">
+<div class="flex flex-col items-center justify-center w-12 border-r border-outline-variant pr-4">
+<span class="font-label-md text-primary">09:00</span>
+<span class="text-[10px] text-tertiary">AM</span>
+</div>
+<div>
+<p class="font-label-md text-on-surface font-bold">Mathematics</p>
+<p class="font-body-sm text-tertiary">Fractions &amp; Decimals</p>
+</div>
+</div>
+<div class="flex gap-4 p-3 rounded-lg border border-outline-variant">
+<div class="flex flex-col items-center justify-center w-12 border-r border-outline-variant pr-4">
+<span class="font-label-md text-tertiary">10:30</span>
+<span class="text-[10px] text-tertiary">AM</span>
+</div>
+<div>
+<p class="font-label-md text-on-surface font-bold">English Literacy</p>
+<p class="font-body-sm text-tertiary">Creative Writing Workshop</p>
+</div>
+</div>
+</div>
+<a href="jadwal-mingguan.html" class="w-full mt-6 py-2 border border-primary text-primary rounded-lg font-label-md hover:bg-surface-container-low transition-colors block text-center mt-auto">
+                        Full Calendar
+                    </a>
+</div>
+<!-- Assessment Journal (Asymmetric Layout) -->
+<div class="md:col-span-12 lg:col-span-7 glass-card rounded-xl p-6">
+<div class="flex justify-between items-center mb-6">
+<h4 class="font-headline-md text-headline-md text-on-surface">Recent Grades</h4>
+<div class="flex gap-2">
+<span class="inline-flex items-center px-3 py-1 rounded-full border border-outline-variant text-label-sm text-tertiary">All Classes</span>
+<span class="material-symbols-outlined text-tertiary cursor-pointer">filter_list</span>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead>
+<tr class="border-b border-outline-variant">
+<th class="pb-3 font-label-md text-tertiary">Student Name</th>
+<th class="pb-3 font-label-md text-tertiary">Assignment</th>
+<th class="pb-3 font-label-md text-tertiary">Score</th>
+<th class="pb-3 font-label-md text-tertiary text-right">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-4 font-body-md text-primary">Avery Chen</td>
+<td class="py-4 font-body-sm text-on-surface-variant">Algebraic Basics Quiz</td>
+<td class="py-4"><span class="px-2 py-1 bg-secondary-container text-on-secondary-container rounded font-bold">98%</span></td>
+<td class="py-4 text-right"><span class="material-symbols-outlined text-tertiary cursor-pointer">more_vert</span></td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors bg-surface-container-lowest/50">
+<td class="py-4 font-body-md text-primary">Marcus Wright</td>
+<td class="py-4 font-body-sm text-on-surface-variant">Solar System Report</td>
+<td class="py-4"><span class="px-2 py-1 bg-surface-container-highest text-on-surface rounded font-bold">82%</span></td>
+<td class="py-4 text-right"><span class="material-symbols-outlined text-tertiary cursor-pointer">more_vert</span></td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-4 font-body-md text-primary">Sofia Rodriguez</td>
+<td class="py-4 font-body-sm text-on-surface-variant">Algebraic Basics Quiz</td>
+<td class="py-4"><span class="px-2 py-1 bg-error-container text-on-error-container rounded font-bold">64%</span></td>
+<td class="py-4 text-right"><span class="material-symbols-outlined text-tertiary cursor-pointer">more_vert</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Quick Actions / Visual Placeholder -->
+<div class="md:col-span-12 lg:col-span-5 flex flex-col gap-gutter">
+<div class="glass-card rounded-xl p-6 bg-primary text-on-primary">
+<div class="flex items-center gap-4 mb-4">
+<span class="material-symbols-outlined text-4xl">emoji_objects</span>
+<h4 class="font-headline-md text-headline-md">Teacher's Insight</h4>
+</div>
+<p class="font-body-md mb-6 opacity-90">3 students are currently struggling with the "Fractions" module. Would you like to generate a tailored review session for tomorrow's class?</p>
+<button class="w-full py-3 bg-white text-primary rounded-lg font-bold hover:bg-opacity-90 transition-all active:scale-[0.98]">
+                            Generate Review Sheet
+                        </button>
+</div>
+<div class="glass-card rounded-xl overflow-hidden h-full relative group">
+<div class="w-full h-full min-h-[160px] bg-cover bg-center transition-transform duration-700 group-hover:scale-110" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAZyU-PqUuYPShWLmVAKw6l0bVrgYoeWJMIrmzHhzkcvhwE0LLVZa7YLDMFnHzX0VIkI5olaEfpBb85U11HqqU1Q2FpW-0tR8cjobm7SPUXYDF6J2FGtMUhZBVR3yXsA2OzxP2YdXhjtLsrXFw0ThW8BkwjJ-iKK8GFPXgrXFc9KFBSxrxo6w6uB_wKd3H1CqQh2j7mXw-Zkc-Jg_EPYID-UOqMu3pr3SmEL3O-S7x6K5yWJDPkWxbEL232OUXGNcwNHodmB1BF0OY')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-on-background/80 to-transparent flex items-end p-6">
+<div>
+<p class="text-white font-label-sm uppercase tracking-widest opacity-80 mb-1">Growth Mindset</p>
+<h5 class="text-white font-headline-md">"The beautiful thing about learning is that no one can take it away from you."</h5>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </main>
-
 <!-- BottomNavBar (Mobile Only) -->
 <nav class="md:hidden fixed bottom-0 left-0 w-full flex justify-around items-center px-4 bg-surface border-t border-outline-variant h-20 z-50">
-    <a class="flex flex-col items-center justify-center text-primary font-bold active:scale-95 transition-transform duration-150" href="index.html">
-        <span class="material-symbols-outlined">dashboard</span>
-        <span class="font-label-sm text-xs">Dashboard</span>
-    </a>
-    <a class="flex flex-col items-center justify-center text-on-surface-variant active:scale-95 transition-transform duration-150" href="jadwal-mingguan.html">
-        <span class="material-symbols-outlined">calendar_today</span>
-        <span class="font-label-sm text-xs">Jadwal</span>
-    </a>
-    <a class="flex flex-col items-center justify-center text-on-surface-variant active:scale-95 transition-transform duration-150" href="daftar-siswa.html">
-        <span class="material-symbols-outlined">group</span>
-        <span class="font-label-sm text-xs">Siswa</span>
-    </a>
-    <a class="flex flex-col items-center justify-center text-on-surface-variant active:scale-95 transition-transform duration-150" href="rekap-absensi.html">
-        <span class="material-symbols-outlined">analytics</span>
-        <span class="font-label-sm text-xs">Absensi</span>
-    </a>
+<a class="flex flex-col items-center justify-center text-primary font-bold active:scale-95 transition-transform duration-150" href="index.html">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-sm text-label-sm">Dashboard</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant active:scale-95 transition-transform duration-150" href="rekap-absensi.html">
+<span class="material-symbols-outlined">check_circle</span>
+<span class="font-label-sm text-label-sm">Attendance</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant active:scale-95 transition-transform duration-150" href="jadwal-mingguan.html">
+<span class="material-symbols-outlined">calendar_today</span>
+<span class="font-label-sm text-label-sm">Schedule</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant active:scale-95 transition-transform duration-150" href="daftar-siswa.html">
+<span class="material-symbols-outlined">group</span>
+<span class="font-label-sm text-label-sm">Students</span>
+</a>
 </nav>
-
-<!-- Scripts -->
+<!-- Micro-interaction Script -->
 <script src="app.js"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-        document.getElementById('current-date').innerText = new Date().toLocaleDateString('id-ID', dateOptions);
-        
-        loadJadwal();
-    });
-</script>
-</body>
-</html>
+        document.querySelectorAll('.glass-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.classList.add('shadow-lg');
+                card.style.transition = 'all 0.3s ease';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.classList.remove('shadow-lg');
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadJadwal();
+        });
+    </script>
+</body></html>
